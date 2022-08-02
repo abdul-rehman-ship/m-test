@@ -13,7 +13,7 @@ import {updateDoc,doc,collection,addDoc, serverTimestamp} from 'firebase/firesto
 import {db} from '../Firebase'
 import { PaystackButton } from 'react-paystack'
 
-const PaystackPop=require("@paystack/inline-js")
+const PaystackPop=require("@paystack/inline")
 import axios from 'axios'
 import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
 
