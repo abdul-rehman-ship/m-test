@@ -91,10 +91,10 @@ const convertDate=(date:any)=>{
     return new Date(date.seconds * 1000).toLocaleDateString()
 }
 const compareDate=(a:any)=>{
-  const date=parseInt(new Date().getTime())
+  const date=(new Date().getTime())
               
               
-  const date2= parseInt(new Date(a.seconds * 1000).getTime())
+  const date2= (new Date(a.seconds * 1000).getTime())
   const time=date2-date
   const res=Math.round(time /(1000*3600*24))
   

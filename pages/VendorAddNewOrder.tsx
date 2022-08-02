@@ -20,7 +20,7 @@ export default function VendorSettings() {
     const isVendor=useSelector((state:RootState)=>state.auth.vendor)
     const vendorSettings=useSelector((state:RootState)=>state.auth.vendorSettings)
     const [products,setProducts]=useState([])
-    const [selectedProducts,setselectedProducts]=useState({})
+    const [selectedProducts,setselectedProducts]:any=useState({})
 
     const [allProducts,setAllProducts]=useState([])
     const router=useRouter()

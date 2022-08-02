@@ -136,13 +136,14 @@ try {
       firstname:user.firstName,
       onSuccess:async()=>{
         Object.entries(wish).forEach(async([key,value])=>{
-          
+          let {product}:any=value
+          let {quantity}:any=value
         dispatch(setLoading(true))
         await addDoc(collection(db, "orders"), {
           customer:userID,
-           product:value.product,
-           quantity:value.quantity,
-           totalPrice: parseInt(value.roduct.salePrice) * (value.quantity),
+           product:product,
+           quantity:quantity,
+           totalPrice: parseInt(product.salePrice) * (quantity),
            deliveryDate:deliveryDate,
            createdAt:serverTimestamp(),
            status:"open",
@@ -159,17 +160,17 @@ try {
        dispatch(setUser({...user,cart:[]}))
       
       
-       await updateDoc(doc(db,"products",value.product.id),
-       {...value.product,initialStock:parseInt(value.product.initialStock)-value.quantity})
+       await updateDoc(doc(db,"products",product.id),
+       {...product,initialStock:parseInt(product.initialStock)-quantity})
       
        const response = await axios.post('/api/sendMail',{
         email:'rehmanabdul22655@gmail.com',
         buisnessName:"RehmanEnterprice",
         customerName:user.firstName+" "+user.surname,
-        item:value.product.name,
-        price:value.product.salePrice,
-        quantity:value.quantity,
-        totalPrice: parseInt(value.product.salePrice) * (value.quantity),
+        item:product.name,
+        price:product.salePrice,
+        quantity:quantity,
+        totalPrice: parseInt(product.salePrice) * (quantity),
         deliveryDate:deliveryDate.toDateString()
       
       })
@@ -195,13 +196,14 @@ try {
         callback:async(response)=>{
               if(response){
                 Object.entries(wish).forEach(async([key,value])=>{
-          
+          let{product}:any=value
+          let{quantity}:any=value
                   dispatch(setLoading(true))
                   await addDoc(collection(db, "orders"), {
                     customer:userID,
-                     product:value.product,
-                     quantity:value.quantity,
-                     totalPrice: parseInt(value.roduct.salePrice) * (value.quantity),
+                     product:product,
+                     quantity:quantity,
+                     totalPrice: parseInt(product.salePrice) * (quantity),
                      deliveryDate:deliveryDate,
                      createdAt:serverTimestamp(),
                      status:"open",
@@ -218,17 +220,17 @@ try {
                  dispatch(setUser({...user,cart:[]}))
                 
                 
-                 await updateDoc(doc(db,"products",value.product.id),
-                 {...value.product,initialStock:parseInt(value.product.initialStock)-value.quantity})
+                 await updateDoc(doc(db,"products",product.id),
+                 {...product,initialStock:parseInt(product.initialStock)-quantity})
                 
                  const response = await axios.post('/api/sendMail',{
                   email:'rehmanabdul22655@gmail.com',
                   buisnessName:"RehmanEnterprice",
                   customerName:user.firstName+" "+user.surname,
-                  item:value.product.name,
-                  price:value.product.salePrice,
-                  quantity:value.quantity,
-                  totalPrice: parseInt(value.product.salePrice) * (value.quantity),
+                  item:product.name,
+                  price:product.salePrice,
+                  quantity:quantity,
+                  totalPrice: parseInt(product.salePrice) * (quantity),
                   deliveryDate:deliveryDate.toDateString()
                 
                 })
@@ -296,12 +298,14 @@ try {
         
       {Object.entries(wish).length>0?
   Object.entries(wish).map(([key, value])=>{
+    let {product}:any=value
+    let {quantity}:any=value
 
       return  <tr  key={key}>
 
-            <td onClick={()=>handleClick(key)}>{  value.product.name}</td>
-            <td onClick={()=>handleClick(key)}>{value.product.salePrice}</td>
-            <td onClick={()=>handleClick(key)}>{value.quantity}</td>
+            <td onClick={()=>handleClick(key)}>{  product.name}</td>
+            <td onClick={()=>handleClick(key)}>{product.salePrice}</td>
+            <td onClick={()=>handleClick(key)}>{quantity}</td>
             <td><button className='btn btn-danger' onClick={()=>removeFromWishlist(key)}>Remove</button></td>
             
 

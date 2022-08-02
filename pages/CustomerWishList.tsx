@@ -126,11 +126,13 @@ dispatch(setUser({...user,wishList:[...Object.values(newWish)]}))
         
       {Object.entries(wish).length>0?
   Object.entries(wish).map(([key, value])=>{
+    let {product}:any=value
+    
 
       return  <tr  key={key}>
 
-            <td onClick={()=>handleClick(key)}>{  value.product.name}</td>
-            <td onClick={()=>handleClick(key)}>{value.product.price}</td>
+            <td onClick={()=>handleClick(key)}>{  product.name}</td>
+            <td onClick={()=>handleClick(key)}>{product.price}</td>
             <td><button className='btn btn-danger' onClick={()=>removeFromWishlist(key)}>Remove</button></td>
             
 

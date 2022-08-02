@@ -39,10 +39,10 @@ const checkSubscription=async()=>{
             
            
             if(profile){
-              const date=parseInt(new Date().getTime())
+              const date:any=new Date().getTime()
                 
                 
-            const date2= parseInt(new Date(profile.createdAt.seconds * 1000).getTime())
+            const date2:any= new Date(profile.createdAt.seconds * 1000).getTime()
 
            const time=date-date2
            const res=Math.round(time /(1000*3600*24))

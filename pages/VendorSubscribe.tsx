@@ -60,7 +60,7 @@ function Profile() {
             
         }
     }
-    const componentProps = {
+    const componentProps :any= {
         email:"abd22655@gmail.com",
         amount:settings && settings.SubscriptionFee * 100,
         metadata: {
@@ -144,4 +144,4 @@ function Profile() {
   )
 }
 
-export default profile
+export default Profile

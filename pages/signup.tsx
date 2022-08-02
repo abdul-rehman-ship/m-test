@@ -16,7 +16,7 @@ export default function Signup() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const user = {
+    const user:any = {
       email: e.target.email.value,
       password: e.target.password.value,
       confirmPassword: e.target.password_c.value,
