@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import VendorNavbar from "../components/VendorNavbar";
 
-export default function signup() {
+export default function Signup() {
   const state = useSelector((state: RootState) =>state.auth)
     const router = useRouter()
   const dispatch = useDispatch<AppDispatch>();

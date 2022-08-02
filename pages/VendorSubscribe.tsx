@@ -14,7 +14,7 @@ import Vendornavbar from '../components/VendorNavbar'
 import { PaystackButton } from 'react-paystack'
 
 
-function profile() {
+function Profile() {
 
     
     

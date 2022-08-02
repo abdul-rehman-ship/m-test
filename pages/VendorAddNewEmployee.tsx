@@ -13,7 +13,7 @@ import Head from "next/head";
 import Script from "next/script";
 import VendorNavbar from "../components/VendorNavbar";
 
-export default function signup() {
+export default function Signup() {
   const state = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();

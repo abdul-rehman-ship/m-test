@@ -12,7 +12,7 @@ import { setLoading, setUser,setVendorProfile } from '../redux/slices/authSlice'
 import Loading from '../components/Loading'
 import Vendornavbar from '../components/VendorNavbar'
 
-function profile() {
+function Profile() {
 
     
     

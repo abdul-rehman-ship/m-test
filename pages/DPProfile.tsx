@@ -12,7 +12,7 @@ import { setLoading, setUser } from '../redux/slices/authSlice'
 import Loading from '../components/Loading'
 import CustomerNavbar from '../components/DeliveryPartnerNavbar'
 
-function profile() {
+function Profile() {
 
     const user=useSelector((state:RootState)=>state.auth.user)
     const userAuth=useSelector((state:RootState)=>state.auth.currentUser)
@@ -162,4 +162,4 @@ function profile() {
   )
 }
 
-export default profile
+export default Profile

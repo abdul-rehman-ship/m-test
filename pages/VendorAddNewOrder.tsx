@@ -182,7 +182,7 @@ export default function VendorSettings() {
 products.length>0?
 
 products.map((product:any)=>{
-return <div className='col-md-4' onClick={()=>selectProductHandle(product)}>
+return <div className='col-md-4'  key={product.id} onClick={()=>selectProductHandle(product)}>
 <VendorProductItem  probs={product} key={product.id}/>
     </div>
 })
