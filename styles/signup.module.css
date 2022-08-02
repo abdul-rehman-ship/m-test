@@ -1,0 +1,76 @@
+.main_container{
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: #EAFFFB !important;
+    padding-bottom: 2rem;
+}
+.login_btn{
+    width: 165px;
+    height: 56px;
+    background: #1C7468 !important;
+    border-radius: 50px !important;
+    transform: translateX(1rem);
+    
+    
+    }
+
+
+.btnGroup{
+        border-radius: 50px;
+        padding-right: 1rem;
+        white-space: nowrap;
+}
+.main_container h2{font-family: 'Poppins';
+font-weight: 800;
+font-size: 24px;
+color: #000000;
+}
+.signup{
+ width: 100%;
+height: 45px;
+color: white !important;
+background: #1C7468 !important;
+padding: 0.3rem auto !important;
+border-radius: 100px !important;
+}
+.btnGroup a{
+    text-decoration: none ;
+    color:black;
+}
+.main_container select, .main_container input{
+    border: none !important;
+    border-radius: 0;
+    background-color: #EAFFFB !important;
+    border-bottom: 0.8px solid rgba(28, 116, 104, 0.15) !important;
+}
+.main_container select {font-weight: 300;
+font-size: 1rem !important;
+color: #212529 !important;
+ background-color: #EAFFFB !important;
+    border-bottom: 0.8px solid rgba(28, 116, 104, 0.15) !important;
+}
+.icon{
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+}
+.main_container label{
+    font-size: 13px;
+line-height: 20px;
+/* identical to box height */
+
+letter-spacing: 0.2px;
+
+color: #787878;
+}
+
+.main_container h4{
+font-family: 'Poppins';
+
+font-weight: 700;
+font-size: 15px;
+line-height: 22px;
+color: #1C7468;
+
+}

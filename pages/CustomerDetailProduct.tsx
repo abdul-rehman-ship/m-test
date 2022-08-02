@@ -1,0 +1,405 @@
+import React,{useState} from 'react'
+import CustomerNavbar from '../components/CustomerNavabar'
+import style from '../styles/vendor.module.css'
+import Carousel from 'react-bootstrap/Carousel';
+import {useDispatch,useSelector} from 'react-redux'
+import { addDoc,collection,doc, updateDoc,serverTimestamp } from 'firebase/firestore';
+import {useRouter} from 'next/router'
+import CustomerProductItem from '../components/CustomerProductItem'
+import toast, { Toaster } from 'react-hot-toast';
+import { db } from '../Firebase';
+import {setLoading,setUser} from '../redux/slices/authSlice'
+import { AppDispatch } from '../redux/store';
+import Loading from '../components/Loading';
+import { PaystackButton } from 'react-paystack'
+import PaystackPop from '@paystack/inline-js'
+import axios from 'axios'
+import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
+
+
+
+function CustomerDetailProduct() {
+
+  const router=useRouter()
+  const vendorSettings=useSelector((state:any)=>state.auth.vendorSettings)
+  const product=useSelector((state:any)=>state.auth.product)
+ const products=useSelector((state:any)=>state.auth.products)
+ const [quantity,setQuantity]:any=useState(1)
+ const userID=useSelector((state:any)=>state.auth.id)
+ const user=useSelector((state:any)=>state.auth.user)
+ const dispatch=useDispatch<AppDispatch>()
+
+ const loading=useSelector((state:any)=>state.auth.loading)
+
+
+ 
+ const config:any = {
+  public_key: vendorSettings.public_key,
+  tx_ref: Date.now(),
+  amount: parseInt(product.salePrice) * (quantity) ,
+  currency: 'NGN',
+  payment_options: 'card,mobilemoney,ussd',
+  customer: {
+    email: user.email,
+    phonenumber: user.mobileNumber,
+    name: user.firstName,
+  },
+  customizations: {
+    title: 'my Payment Title',
+    description: 'Payment for items ',
+    logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+  },
+};
+
+const handleFlutterPayment = useFlutterwave(config);
+
+
+
+//  const componentProps = {
+//   email:user.email,
+//   amount:(parseFloat(product.salePrice).toFixed(2)) * (quantity),
+//   metadata: {
+//     name:user.firstName,
+//     phone:user.mobileNumber,
+//   },
+//   publicKey:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
+//   text: "Pay Now",
+//   onSuccess: () =>
+//     alert("Thanks for doing business with us! Come back soon!!"),
+//   onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+// }
+
+
+ const handleChange=(e:any)=>{
+  setQuantity(e.target.value)
+ }
+
+ const addToWishList=async()=>{
+  try {
+
+
+    dispatch(setLoading(true))
+   
+   
+    await updateDoc(doc(db, "users", userID), 
+        {...user,wishList:{...user.wishList,[product.id]:{product,quantity}}})
+      dispatch(setUser({...user,wishList:{...user.wishList,[product.id]:{product,quantity}}}))
+        dispatch(setLoading(false))
+        
+    toast.success("Product Added to WishList")
+    
+  } catch (error) {
+    dispatch(setLoading(false))
+    toast.error(error.message)
+  }
+
+ }
+ const addToCart=async()=>{
+  try {
+
+
+    dispatch(setLoading(true))
+   if(quantity< product.initialStock){
+    await updateDoc(doc(db, "users", userID), 
+    {...user,cart:{...user.cart,[product.id]:{product,quantity}}})
+  dispatch(setUser({...user,cart:{...user.cart,[product.id]:{product,quantity}}}))
+    dispatch(setLoading(false))
+
+    
+    toast.success("Product Added to Cart")
+
+   }else{
+    dispatch(setLoading(false))
+
+      toast.error("not enough stock")
+   }
+   
+    
+  } catch (error) {
+    dispatch(setLoading(false))
+
+    toast.error(error.message)
+  }
+    
+  }
+  
+
+ 
+ const buyNow=async()=>{
+
+  
+const deliveryDate=new Date()
+
+
+deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
+
+
+try {
+ 
+    if(parseInt(product.initialStock) >= quantity){
+      if(vendorSettings.paymentMethod=="flutterWave"){
+
+
+        
+       
+        handleFlutterPayment({
+          callback: async(response) => {
+             if(response.transaction_id){
+              
+    dispatch(setLoading(true))
+    await addDoc(collection(db, "orders"), {
+      customer:userID,
+       product:product,
+       quantity:quantity,
+       totalPrice: parseInt(product.salePrice) * (quantity),
+       deliveryDate:deliveryDate,
+       createdAt:serverTimestamp(),
+       status:"open",
+       employee:{},  
+       deliveryPartner:{},
+       deliveryPrice:"0",
+       DPEmployee:{},
+       paid:false,
+  
+  
+   })
+     await updateDoc(doc(db, "users", userID), 
+     {...user,cart:[]})
+   dispatch(setUser({...user,cart:[]}))
+  
+  
+   await updateDoc(doc(db,"products",product.id),
+   {...product,initialStock:parseInt(product.initialStock)-quantity})
+  
+   const response = await axios.post('/api/sendMail',{
+    email:'rehmanabdul22655@gmail.com',
+    buisnessName:"RehmanEnterprice",
+    customerName:user.firstName+" "+user.surname,
+    item:product.name,
+    price:product.salePrice,
+    quantity:quantity,
+    totalPrice: parseInt(product.salePrice) * (quantity),
+    deliveryDate:deliveryDate.toDateString()
+  
+  })
+  
+     dispatch(setLoading(false))
+      toast.success("Order Placed Successfully")
+     
+  
+        
+             }
+              closePaymentModal() // this will close the modal programmatically
+          },
+          onClose: () => {},
+      
+        })
+  
+      }else{
+        const paystack=new PaystackPop()
+        paystack.newTransaction({
+          key:vendorSettings.public_key,
+          email:user.email,
+          amount: parseInt(product.salePrice) * (quantity) *100,
+          firstname:user.firstName,
+          onSuccess:async()=>{
+        dispatch(setLoading(true))
+        await addDoc(collection(db, "orders"), {
+          customer:userID,
+           product:product,
+           quantity:quantity,
+           totalPrice: parseInt(product.salePrice) * (quantity),
+           deliveryDate:deliveryDate,
+           createdAt:serverTimestamp(),
+           status:"open",
+           employee:{},  
+           deliveryPartner:{},
+           deliveryPrice:"0",
+           DPEmployee:{},
+           paid:false,
+      
+      
+       })
+         await updateDoc(doc(db, "users", userID), 
+         {...user,cart:[]})
+       dispatch(setUser({...user,cart:[]}))
+      
+      
+       await updateDoc(doc(db,"products",product.id),
+       {...product,initialStock:parseInt(product.initialStock)-quantity})
+      
+       const response = await axios.post('/api/sendMail',{
+        email:'rehmanabdul22655@gmail.com',
+        buisnessName:"RehmanEnterprice",
+        customerName:user.firstName+" "+user.surname,
+        item:product.name,
+        price:product.salePrice,
+        quantity:quantity,
+        totalPrice: parseInt(product.salePrice) * (quantity),
+        deliveryDate:deliveryDate.toDateString()
+      
+      })
+      
+         dispatch(setLoading(false))
+          toast.success("Order Placed Successfully")
+         
+      
+            
+          },
+          onCencel:()=>{
+            toast.error("payment cencel")
+          }
+      
+        })
+      }
+  
+
+
+  
+
+      
+    
+      
+
+    }else{
+      dispatch(setLoading(false))
+      toast.error("Not Enough Stock")
+    }
+    
+const res=await fetch('/api/sendMail')
+const s=await res.json()
+console.log(s);
+
+  
+
+ 
+} catch (error) {
+  dispatch(setLoading(false))
+  toast.error(error.message)
+  
+}
+
+
+
+}
+  
+
+ 
+
+
+  return (
+    <>
+    <Toaster/>
+{loading && <Loading/>}
+    <CustomerNavbar/>
+    {product && <div className={style.productDetail}>
+      
+      
+        <div className="container mt-5">
+
+          <div className="row">
+            <div className="col-md-6">
+
+
+              
+    <Carousel>
+        {product.images.map((image:any,index:any)=>{
+            
+              return  <Carousel.Item key={index}>
+                <img
+                  className="d-block w-100"
+                  src={image}
+                  style={{width:'100%',maxHeight:'100%',objectFit:'contain',border:'1px solid #ccc',borderRadius:'5px'}}
+                  alt="First slide"
+                />
+              
+              </Carousel.Item>
+
+        })}   
+</Carousel>
+            </div>
+
+        <div className="col-md-6 px-5 mt-4">
+
+        <div className="d-flex justify-content-between">
+        <h3 style={{fontWeight:'600',fontSize:'1.5rem'}}>{product.name}</h3>
+        <h3 style={{fontWeight:'600',fontSize:'1.5rem'}}>{vendorSettings && vendorSettings.currency}{product.salePrice}</h3>
+          
+        </div>
+        <div className="mt-4 d-flex justify-content-between">
+          <h3 style={{fontWeight:'600',fontSize:'1.5rem'}}>Stock :</h3>
+          <p>{product.initialStock}</p>
+        </div>
+        <div className="mt-4">
+          <h3>Description: </h3>
+          <p>{product.description}</p>
+
+          </div>
+          <span style={{fontWeight:600}}>Enter Quantity*</span>
+    <input type="number" min={1}  name="quantity"  onChange={handleChange}  className="form-control mt-2"  />
+
+          <div className="mt-4 d-flex justify-content-between flex-column flex-lg-row gap-2">
+          <button className='btn' onClick={addToCart}>Add to Cart</button>
+          <button className='btn' onClick={addToWishList}>Add to Wishlist </button>
+
+          <button className={`btn `}  onClick={buyNow}>Buy Now</button>
+          
+          
+
+
+          </div>
+        </div>
+
+          </div>
+
+          
+
+  
+        </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+     
+     
+     
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      }
+    
+    
+    
+    
+    
+    
+    
+    </>
+  )
+}
+
+export default CustomerDetailProduct

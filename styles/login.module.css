@@ -1,0 +1,118 @@
+
+
+
+.main_container{
+width: 100% !important;
+max-height: 100%;
+overflow-x: hidden !important;
+}
+
+.login_container{
+    background-color: #EAFFFB !important;
+    overflow-x: hidden;
+}
+.carouselExampleFade{
+    height: 100% !important;
+}
+.main_div{
+    height: 100vh;
+    overflow-y: hidden !important;
+}
+.copyright{
+    font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+
+letter-spacing: 0.3px;
+
+color: #666666;
+}
+
+.author{
+    font-weight: 800;
+    
+}
+.main_container h2{
+font-family: 'Poppins';
+font-weight: 600;
+font-size: 24px;
+}
+.main_container p{
+    font-family: 'Poppins';
+    
+    font-weight: 300;
+    font-size: 16px;
+}
+.carouselCaption{
+    width: 15rem;
+    position: absolute;
+    bottom: 20% !important;
+    left:5rem;
+}
+.carouselCaption h5{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 24px !important;
+}
+.carouselCaption h2{
+font-family: 'Poppins Bold';
+font-style: normal;
+font-weight: 500;
+font-size: 48px  !important;
+}
+.carouselCaption p{
+    width: 100%;
+}
+.btnGroup{
+    border-radius: 50px;
+    padding-right: 1rem;
+    white-space: nowrap;
+}
+.btnGroup a{
+    text-decoration: none ;
+    color:black;
+}
+.textEnd p{
+    font-family: 'Poppins';
+font-weight: 400;
+font-size: 14px;
+color: #218F80;
+}
+
+.login_btn,.signin_btn{
+width: 165px;
+height: 56px;
+background: #1C7468 !important;
+border-radius: 50px !important;
+
+
+}
+.icon{
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+}
+.login_btn:hover{
+    background-color: #1C7468;
+}
+
+.main_container input{
+    border: none !important;
+    border-radius: 0;
+    background-color: #EAFFFB !important;
+    border-bottom: 0.8px solid rgba(28, 116, 104, 0.15) !important;
+}
+@media (max-width:992px){
+    .main_div{
+        overflow-y:scroll !important ;
+    }
+
+}
+@media (max-width:768px){
+    .signin_btn{
+        margin-bottom: 1rem;
+    }
+
+}
