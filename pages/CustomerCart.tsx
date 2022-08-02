@@ -71,11 +71,16 @@ const handleFlutterPayment = useFlutterwave(config);
   
 useEffect(()=>{
 
-let price=0
+let price:any=0
   Object.entries(wish).forEach(([key, value]) => {
     
-    let basePrice=value.product.salePrice
-     price=price+(parseFloat(value.quantity).toFixed(2) ) * (parseFloat(basePrice).toFixed(2))
+    const{product}:any=value
+    const {quantity}:any=value
+    
+    let basePrice:any=0
+     basePrice= product.salePrice 
+     price=price+((quantity)  * (basePrice))
+     price=parseFloat(price).toFixed(2)
   })
     setTotalPrice(price)
     
