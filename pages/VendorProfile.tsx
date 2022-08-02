@@ -169,7 +169,7 @@ function Profile() {
 <div className="row  mx-2">
 
 <div className="col-md-6 mt-4">
-        <span>What's app Number*</span>
+        <span>Whats app Number*</span>
         <input type="text"   className="form-control mt-2" name="WNumber" onChange={handleChange}  value={mUser.WNumber}  />
 
 

@@ -161,7 +161,7 @@ export default function Signup() {
                   type="number"
                   className="form-control mt-4"
                   name="WNumber"
-                  placeholder="What's App Number*"
+                  placeholder="Whats App Number*"
                   required
                 />
                

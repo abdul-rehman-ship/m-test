@@ -14,7 +14,7 @@ import { AppDispatch } from '../redux/store'
 
 
 
-export default function adminDashboard() {
+export default function AdminDashboard() {
     const state=useSelector((state:any)=>state.auth)
     const router=useRouter()
     const adminProfile=useSelector((state:any)=>state.auth.adminProfile)
