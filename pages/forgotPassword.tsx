@@ -7,7 +7,7 @@ import Loading from '../components/Loading'
 import { forgotPasswordAsyncThunk } from '../redux/slices/authSlice'
 
 
-export default function forgotPassword() {
+export default function ForgotPassword() {
   const state = useSelector((state: RootState) =>state.auth)
   const dispatch = useDispatch<AppDispatch>();
 
@@ -37,7 +37,7 @@ export default function forgotPassword() {
                     </figure>
                     <form  onSubmit={handleSubmit}>
                     <h3 className="mt-3">Forgot your password?</h3>
-                    <p className="text-center mt-2">Enter your email address and we'll send you a link to reset your password.</p>
+                    <p className="text-center mt-2">Enter your email address and we will send you a link to reset your password.</p>
                     <div className={` ${style.input_container} mt-5 position-relative`}>
                         <input type="email" className="form-control" name="email" required placeholder="Email Address"/>
                         <img src="email_icon.png" className={`img-fluid ${style.icon}`}  alt=""/>

@@ -84,10 +84,7 @@ export default function VendorNavbar() {
 <Link href="VendorSettings">settings</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                    <svg xmlns="http://www.w3.org/2000/svg" style={{height:'34px',width:'34px'}} className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z" />
-</svg>
-                   
+              
 <Link href="VendorOverheads">overheads</Link>
                     </NavDropdown.Item>
                    

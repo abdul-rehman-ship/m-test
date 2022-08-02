@@ -5,7 +5,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import style from '../styles/profile.module.css'
 
 
-function trackOrder() {
+function TrackOrder() {
 
     console.log("called");
     
@@ -117,4 +117,4 @@ const getData=async()=>{
   )
 }
 
-export default trackOrder
+export default TrackOrder

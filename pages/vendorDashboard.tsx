@@ -13,7 +13,7 @@ import { toast,Toaster } from 'react-hot-toast'
 
 
 
-export default function vendorDashboard() {
+export default function VendorDashboard() {
     const state=useSelector((state:any)=>state.auth)
     const dispatch=useDispatch()
     const router=useRouter()

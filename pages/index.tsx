@@ -277,7 +277,7 @@ const Home: NextPage = () => {
                   <h5>Good Morning</h5>
                   <h2>11:34 AM</h2>
                   <p>
-                    "If you truly love nature, you will find beauty everywhere."
+                    If you truly love nature, you will find beauty everywhere.
                     Laura Ingalls
                   </p>
                 </div>

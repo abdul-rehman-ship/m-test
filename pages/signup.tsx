@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { addUser, authRegister } from "../redux/slices/authSlice";
 import Link from "next/link";
 
-export default function signup() {
+export default function Signup() {
   const state = useSelector((state: RootState) =>state.auth)
     
   const dispatch = useDispatch<AppDispatch>();
