@@ -12,10 +12,11 @@ import {updateDoc,doc,collection,addDoc, serverTimestamp} from 'firebase/firesto
 
 import {db} from '../Firebase'
 import { PaystackButton } from 'react-paystack'
+
 import PaystackPop from '@paystack/inline-js'
 import axios from 'axios'
 import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
-import { privateDecrypt } from 'crypto'
+
 
 
 
@@ -85,6 +86,8 @@ if( typeof window !=="undefined"){
   })
     setTotalPrice(price)
     
+}else{
+  router.push("/")
 }
     
 },[])
