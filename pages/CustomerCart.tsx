@@ -71,7 +71,8 @@ const handleFlutterPayment = useFlutterwave(config);
   
 useEffect(()=>{
 
-let price:any=0
+if( typeof window !=="undefined"){
+  let price:any=0
   Object.entries(wish).forEach(([key, value]) => {
     
     const{product}:any=value
@@ -84,6 +85,7 @@ let price:any=0
   })
     setTotalPrice(price)
     
+}
     
 },[])
 const removeFromWishlist=async(k:any)=>{

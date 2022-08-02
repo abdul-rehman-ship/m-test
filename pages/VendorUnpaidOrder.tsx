@@ -70,8 +70,11 @@ const getAllCustomers=async()=>{
   });
 }
     useEffect(()=>{
-       getData()
-       getAllCustomers()
+      if(typeof window !=="undefined"){
+        getData()
+        getAllCustomers()
+      }
+      
     },[])
     const onSearchChange=async(e:any)=>{
         setCustomers([])
