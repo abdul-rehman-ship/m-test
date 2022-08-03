@@ -13,7 +13,6 @@ import {updateDoc,doc,collection,addDoc, serverTimestamp} from 'firebase/firesto
 import {db} from '../Firebase'
 import { PaystackButton } from 'react-paystack'
 
-import PaystackPop from '@paystack/inline-js'
 import axios from 'axios'
 import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
 
@@ -24,7 +23,7 @@ function CustomerCart() {
     const user=useSelector((state:any)=>state.auth.user)
     const loading=useSelector((state:any)=>state.auth.loading)
     const vendorSettings=useSelector((state:any)=>state.auth.vendorSettings)
-    let wish=user.cart
+    let wish= user? user.cart:""
     const [wishList,setWishList]=useState([])
     const dispatch=useDispatch<AppDispatch>()
     const [searchString,setSearchString]=useState("")
@@ -36,7 +35,7 @@ function CustomerCart() {
  const userID=useSelector((state:any)=>state.auth.id)
    
  const config:any = {
-  public_key: vendorSettings.public_key,
+  public_key: vendorSettings?vendorSettings.public_key:"",
   tx_ref: Date.now(),
   amount: total_price ,
   currency: 'NGN',
@@ -123,6 +122,74 @@ dispatch(setUser({...user,cart:[...Object.values(newWish)]}))
   
 
 }
+const componentProps :any= {
+  publicKey:vendorSettings.public_key,
+  email:user.email,
+  amount: total_price *100,
+  firstname:user.firstName,
+  
+  text: "checkout",
+  onSuccess:async () =>
+
+  {
+    const deliveryDate=new Date()
+
+
+deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
+
+    Object.entries(wish).forEach(async([key,value])=>{
+      let {product}:any=value
+      let {quantity}:any=value
+    dispatch(setLoading(true))
+    await addDoc(collection(db, "orders"), {
+      customer:userID,
+       product:product,
+       quantity:quantity,
+       totalPrice: parseInt(product.salePrice) * (quantity),
+       deliveryDate:deliveryDate,
+       createdAt:serverTimestamp(),
+       status:"open",
+       employee:{},  
+       deliveryPartner:{},
+       deliveryPrice:"0",
+       DPEmployee:{},
+       paid:false,
+  
+  
+   })
+     await updateDoc(doc(db, "users", userID), 
+     {...user,cart:[]})
+   dispatch(setUser({...user,cart:[]}))
+  
+  
+   await updateDoc(doc(db,"products",product.id),
+   {...product,initialStock:parseInt(product.initialStock)-quantity})
+  
+    await axios.post('/api/sendMail',{
+    email:'rehmanabdul22655@gmail.com',
+    buisnessName:"RehmanEnterprice",
+    customerName:user.firstName+" "+user.surname,
+    item:product.name,
+    price:product.salePrice,
+    quantity:quantity,
+    totalPrice: parseInt(product.salePrice) * (quantity),
+    deliveryDate:deliveryDate.toDateString()
+  
+  })
+  
+     dispatch(setLoading(false))
+      toast.success("Order Placed Successfully")
+     
+  
+        
+     
+    })
+        
+  }
+    ,
+  onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+}
+
 
 const checkOut=async()=>{
 const deliveryDate=new Date()
@@ -133,67 +200,70 @@ deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfD
 
 try {
   if(vendorSettings.paymentMethod=="paystack"){
-    const paystack=new PaystackPop()
-    paystack.newTransaction({
-      key:vendorSettings.public_key,
-      email:user.email,
-      amount: total_price *100,
-      firstname:user.firstName,
-      onSuccess:async()=>{
-        Object.entries(wish).forEach(async([key,value])=>{
-          let {product}:any=value
-          let {quantity}:any=value
-        dispatch(setLoading(true))
-        await addDoc(collection(db, "orders"), {
-          customer:userID,
-           product:product,
-           quantity:quantity,
-           totalPrice: parseInt(product.salePrice) * (quantity),
-           deliveryDate:deliveryDate,
-           createdAt:serverTimestamp(),
-           status:"open",
-           employee:{},  
-           deliveryPartner:{},
-           deliveryPrice:"0",
-           DPEmployee:{},
-           paid:false,
+  //   const paystack=new PaystackPop()
+  //   paystack.newTransaction({
+  //     key:vendorSettings.public_key,
+  //     email:user.email,
+  //     amount: total_price *100,
+  //     firstname:user.firstName,
+  //     onSuccess:async()=>{
+  //       Object.entries(wish).forEach(async([key,value])=>{
+  //         let {product}:any=value
+  //         let {quantity}:any=value
+  //       dispatch(setLoading(true))
+  //       await addDoc(collection(db, "orders"), {
+  //         customer:userID,
+  //          product:product,
+  //          quantity:quantity,
+  //          totalPrice: parseInt(product.salePrice) * (quantity),
+  //          deliveryDate:deliveryDate,
+  //          createdAt:serverTimestamp(),
+  //          status:"open",
+  //          employee:{},  
+  //          deliveryPartner:{},
+  //          deliveryPrice:"0",
+  //          DPEmployee:{},
+  //          paid:false,
       
       
-       })
-         await updateDoc(doc(db, "users", userID), 
-         {...user,cart:[]})
-       dispatch(setUser({...user,cart:[]}))
+  //      })
+  //        await updateDoc(doc(db, "users", userID), 
+  //        {...user,cart:[]})
+  //      dispatch(setUser({...user,cart:[]}))
       
       
-       await updateDoc(doc(db,"products",product.id),
-       {...product,initialStock:parseInt(product.initialStock)-quantity})
+  //      await updateDoc(doc(db,"products",product.id),
+  //      {...product,initialStock:parseInt(product.initialStock)-quantity})
       
-       const response = await axios.post('/api/sendMail',{
-        email:'rehmanabdul22655@gmail.com',
-        buisnessName:"RehmanEnterprice",
-        customerName:user.firstName+" "+user.surname,
-        item:product.name,
-        price:product.salePrice,
-        quantity:quantity,
-        totalPrice: parseInt(product.salePrice) * (quantity),
-        deliveryDate:deliveryDate.toDateString()
+  //      const response = await axios.post('/api/sendMail',{
+  //       email:'rehmanabdul22655@gmail.com',
+  //       buisnessName:"RehmanEnterprice",
+  //       customerName:user.firstName+" "+user.surname,
+  //       item:product.name,
+  //       price:product.salePrice,
+  //       quantity:quantity,
+  //       totalPrice: parseInt(product.salePrice) * (quantity),
+  //       deliveryDate:deliveryDate.toDateString()
       
-      })
+  //     })
       
-         dispatch(setLoading(false))
-          toast.success("Order Placed Successfully")
+  //        dispatch(setLoading(false))
+  //         toast.success("Order Placed Successfully")
          
       
             
          
-        })
-      },
+  //       })
+  //     },
       
-          onCencel:()=>{
-            toast.error("payment cencel")
-          }
+  //         onCencel:()=>{
+  //           toast.error("payment cencel")
+  //         }
 
-    })
+  //   })
+ 
+ 
+ 
   }else{
 
       handleFlutterPayment({
@@ -341,7 +411,10 @@ try {
   <div className={`row  container ${style.productDetail}`}>
     <div className="col-md-6"></div>
     <div className="col-md-6 text-end">
-      <button className='btn ' onClick={checkOut}>checkout</button>
+      {/* <button className='btn ' onClick={checkOut}>checkout</button> */}
+      {vendorSettings.paymentMethod=="paystack"?
+      <PaystackButton {...componentProps}/> 
+      :""}
     </div>
   </div>
     

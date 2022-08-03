@@ -18,6 +18,7 @@ import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave
 
 
 
+
 function CustomerDetailProduct() {
 
   const router=useRouter()

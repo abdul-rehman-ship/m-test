@@ -14,12 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "noImplicitAny":false ,
-"typeRoots": [
-  "../node_modules/@types",
-  "../@types"
-]
+    "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/CustomerCart.jsx"],
   "exclude": ["node_modules", "../../typings"]

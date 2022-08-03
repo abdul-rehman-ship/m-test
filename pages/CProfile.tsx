@@ -73,7 +73,7 @@ const  Profile=()=> {
 
         <form onSubmit={handleSubmit}>
         <div className={`row d-flex justify-content-center `}>
-            <img src={userAuth.photoURL?userAuth.photoURL:'avatar.jpg'} alt="avatar" className={`${style.avatar} img-fluid rounded-circle border border-primary`} />
+            <img src={'avatar.jpg'} alt="avatar" className={`${style.avatar} img-fluid rounded-circle border border-primary`} />
         </div>
 
         <div className={`row px-3`}>
