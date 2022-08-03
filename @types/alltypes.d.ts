@@ -1,1 +1,1 @@
-declare module 'react-excel-renderer';
+declare module '@paystack/inline/js';
