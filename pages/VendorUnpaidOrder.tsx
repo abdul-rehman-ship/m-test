@@ -60,7 +60,7 @@ const [assign,setAssign]:any=useState("none")
   };
   const componentProps :any= {
     publicKey:vendorSettings?vendorSettings.public_key:"",
-    email:state?state.vendorProfile.email:"",
+    email:"abd2265@gmail.com",
     amount: totalAmount * 100,
     firstname:state?state.vendorProfile.buisnessName:"",
     
@@ -71,7 +71,7 @@ const [assign,setAssign]:any=useState("none")
       const deliveryDate=new Date()
   
   
-  deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
+  deliveryDate.setDate(deliveryDate.getDate() + parseInt(vendorSettings? vendorSettings.numberOfDeliveryDate:""))
   
   dispatch(setLoading(true))
     
@@ -107,7 +107,7 @@ const [assign,setAssign]:any=useState("none")
     currency: 'NGN',
     payment_options: 'card,mobilemoney,ussd',
     customer: {
-      email:state?state.vendorProfile.email:"",
+      email:"abd22655@gmail.com",
       phonenumber: state?state.vendorProfile.mobileNumber:"",
       
     },
@@ -243,7 +243,7 @@ const paySelected=async()=>{
       const deliveryDate=new Date()
   
   
-  deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
+  deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings? vendorSettings.numberOfDeliveryDate:""))
   
   dispatch(setLoading(true))
     
@@ -338,7 +338,7 @@ const paySelected=async()=>{
      
 <div className="row mt-4 mb-3   d-flex justify-content-end" >
            
-{vendorSettings.paymentMethod=="paystack" ? 
+{vendorSettings && vendorSettings.paymentMethod=="paystack" ? 
 
 
  
@@ -353,7 +353,7 @@ const paySelected=async()=>{
 pay selected
 </button></Link>}
 
-{vendorSettings.paymentMethod=="paystack" ? 
+  {vendorSettings && vendorSettings.paymentMethod=="paystack" ? 
 
 
  
