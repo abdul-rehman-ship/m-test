@@ -126,7 +126,7 @@ const componentProps :any= {
   publicKey:vendorSettings? vendorSettings.public_key:"",
   email:user?user.email:"",
   amount: total_price *100,
-  firstname:user.firstName,
+  firstname:user?user.firstName:"",
   
   text: "checkout",
   onSuccess:async () =>

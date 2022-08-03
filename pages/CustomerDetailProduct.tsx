@@ -36,7 +36,7 @@ function CustomerDetailProduct() {
  const config:any = {
   public_key: vendorSettings?vendorSettings.public_key:"",
   tx_ref: Date.now(),
-  amount: parseInt(product.salePrice) * (quantity) ,
+  amount: product ?parseInt(product.salePrice) * (quantity) :"",
   currency: 'NGN',
   payment_options: 'card,mobilemoney,ussd',
   customer: {
@@ -53,7 +53,7 @@ function CustomerDetailProduct() {
 const componentProps :any= {
   publicKey:vendorSettings?vendorSettings.public_key:"",
   email:user?user.email:"",
-  amount: product.salePrice * quantity * 100,
+  amount: product ?product.salePrice * quantity * 100:"",
   firstname:user?user.firstName:"",
   
   text: "checkout",
@@ -69,7 +69,7 @@ await addDoc(collection(db, "orders"), {
   customer:userID,
    product:product,
    quantity:quantity,
-   totalPrice: parseInt(product.salePrice) * (quantity),
+   totalPrice:product? parseInt(product.salePrice) * (quantity):"",
    deliveryDate:deliveryDate,
    createdAt:serverTimestamp(),
    status:"open",
@@ -94,9 +94,9 @@ email:user? user.email:"",
 buisnessName:"RehmanEnterprice",
 customerName:user?user.firstName+" "+user.surname:"",
 item:product.name,
-price:product.salePrice,
+price:product ?product.salePrice :"", 
 quantity:quantity,
-totalPrice: parseInt(product.salePrice) * (quantity),
+totalPrice:product? parseInt(product.salePrice) * (quantity):"",
 deliveryDate:deliveryDate.toDateString()
 
 })
@@ -213,7 +213,7 @@ try {
       customer:userID,
        product:product,
        quantity:quantity,
-       totalPrice: parseInt(product.salePrice) * (quantity),
+       totalPrice: product?parseInt(product.salePrice) * (quantity):"",
        deliveryDate:deliveryDate,
        createdAt:serverTimestamp(),
        status:"open",
@@ -238,9 +238,9 @@ try {
     buisnessName:"RehmanEnterprice",
     customerName:user.firstName+" "+user.surname,
     item:product.name,
-    price:product.salePrice,
+    price:product?product.salePrice:"",
     quantity:quantity,
-    totalPrice: parseInt(product.salePrice) * (quantity),
+    totalPrice:product? parseInt(product.salePrice) * (quantity):"",
     deliveryDate:deliveryDate.toDateString()
   
   })
@@ -393,7 +393,7 @@ const checkStock=()=>{
 
         <div className="d-flex justify-content-between">
         <h3 style={{fontWeight:'600',fontSize:'1.5rem'}}>{product.name}</h3>
-        <h3 style={{fontWeight:'600',fontSize:'1.5rem'}}>{vendorSettings && vendorSettings.currency}{product.salePrice}</h3>
+        <h3 style={{fontWeight:'600',fontSize:'1.5rem'}}>{vendorSettings && vendorSettings.currency}{product?product.salePrice:""}</h3>
           
         </div>
         <div className="mt-4 d-flex justify-content-between">

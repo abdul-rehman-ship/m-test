@@ -40,7 +40,7 @@ const [assign,setAssign]:any=useState("none")
     const data = await getDocs(collection(db, "orders"));
     data.forEach((doc: any) => {
 
-        if(doc.data().deliveryPartner.email){
+        if(doc.data().deliveryPartner){
           if(!doc.data().paid){
             arr.push({...doc.data(),id:doc.id})
     
