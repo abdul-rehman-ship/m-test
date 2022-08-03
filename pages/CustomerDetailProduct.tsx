@@ -34,7 +34,7 @@ function CustomerDetailProduct() {
 
  
  const config:any = {
-  public_key: vendorSettings.public_key,
+  public_key: vendorSettings.public_key?vendorSettings.public_key:"",
   tx_ref: Date.now(),
   amount: parseInt(product.salePrice) * (quantity) ,
   currency: 'NGN',
@@ -51,7 +51,7 @@ function CustomerDetailProduct() {
   },
 };
 const componentProps :any= {
-  publicKey:vendorSettings.public_key,
+  publicKey:vendorSettings.public_key?vendorSettings.public_key:"",
   email:user.email,
   amount: product.salePrice * quantity * 100,
   firstname:user.firstName,

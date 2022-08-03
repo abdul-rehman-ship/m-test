@@ -123,7 +123,7 @@ dispatch(setUser({...user,cart:[...Object.values(newWish)]}))
 
 }
 const componentProps :any= {
-  publicKey:vendorSettings.public_key,
+  publicKey:vendorSettings? vendorSettings.public_key:"",
   email:user.email,
   amount: total_price *100,
   firstname:user.firstName,

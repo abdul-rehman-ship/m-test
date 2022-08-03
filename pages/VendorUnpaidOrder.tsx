@@ -59,7 +59,7 @@ const [assign,setAssign]:any=useState("none")
     await setAllCustomers(arr)
   };
   const componentProps :any= {
-    publicKey:vendorSettings.public_key,
+    publicKey:vendorSettings?vendorSettings.public_key:"",
     email:state.vendorProfile.email,
     amount: totalAmount * 100,
     firstname:state.vendorProfile.buisnessName,
@@ -101,7 +101,7 @@ const [assign,setAssign]:any=useState("none")
     onClose: () => alert("Wait! You need this oil, don't go!!!!"),
   }
   const config:any = {
-    public_key: vendorSettings.public_key,
+    public_key:vendorSettings ? vendorSettings.public_key:"",
     tx_ref: Date.now(),
     amount: totalAmount ,
     currency: 'NGN',

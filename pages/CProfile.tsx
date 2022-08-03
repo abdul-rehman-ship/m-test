@@ -21,7 +21,15 @@ const  Profile=()=> {
     const router=useRouter()
     const dispatch=useDispatch<AppDispatch>()
 
-    const [mUser,setMUser]=useState(user)
+    const [mUser,setMUser]=useState(user?user:{
+        firstName:"",
+        surname:"",
+        email:"",
+        buisnessAddress:"",
+        state:"",
+        WNumber:"",
+        mobileNumber:""
+    })
    useEffect(()=>{
     
 

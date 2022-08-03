@@ -16,7 +16,7 @@ import {db} from '../Firebase'
 function CustomerCart() {
     const user=useSelector((state:any)=>state.auth.user)
     const loading=useSelector((state:any)=>state.auth.loading)
-    let wish=user.wishList
+    let wish=user?user.wishList:""
     const [wishList,setWishList]=useState([])
     const dispatch=useDispatch<AppDispatch>()
     const [searchString,setSearchString]=useState("")
@@ -42,12 +42,14 @@ function CustomerCart() {
     setCustomers([])
     let arr=[]
     allcustomers.forEach((customer:any)=>{
-      
-  
-      if(customer.firstName.toLowerCase().includes(searchString.toLowerCase())){
-        arr.push(customer)
-        
+      if(customer.firstName){
+        if(customer.firstName.toLowerCase().includes(searchString.toLowerCase())){
+          arr.push(customer)
+          
+        }
       }
+  
+     
   
     })
     
