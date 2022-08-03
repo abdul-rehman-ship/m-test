@@ -62,7 +62,7 @@ const [assign,setAssign]:any=useState("none")
     publicKey:vendorSettings?vendorSettings.public_key:"",
     email:"abd2265@gmail.com",
     amount: totalAmount * 100,
-    firstname:state?state.vendorProfile.buisnessName:"",
+    firstname:"vendor name",
     
     text: "pay selected",
     onSuccess:async () =>
@@ -107,8 +107,7 @@ const [assign,setAssign]:any=useState("none")
     currency: 'NGN',
     payment_options: 'card,mobilemoney,ussd',
     customer: {
-      email:"abd22655@gmail.com",
-      phonenumber: state?state.vendorProfile.mobileNumber:"",
+      email:"abd22655@gmail.com"
       
     },
     customizations: {

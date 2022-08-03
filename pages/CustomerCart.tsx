@@ -411,7 +411,7 @@ try {
   <div className={`row  container ${style.productDetail}`}>
     <div className="col-md-6"></div>
     <div className="col-md-6 text-end">
-      {vendorSettings.paymentMethod=="paystack"?
+      {vendorSettings&& vendorSettings.paymentMethod=="paystack"?
       <PaystackButton {...componentProps}/> 
       :
       
