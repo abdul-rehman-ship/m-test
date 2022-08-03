@@ -60,7 +60,7 @@ const [assign,setAssign]:any=useState("none")
   };
   const componentProps :any= {
     publicKey:vendorSettings?vendorSettings.public_key:"",
-    email:state.vendorProfile.email,
+    email:state?state.vendorProfile.email:"",
     amount: totalAmount * 100,
     firstname:state.vendorProfile.buisnessName,
     
@@ -107,7 +107,7 @@ const [assign,setAssign]:any=useState("none")
     currency: 'NGN',
     payment_options: 'card,mobilemoney,ussd',
     customer: {
-      email:state.vendorProfile.email,
+      email:state?state.vendorProfile.email:"",
       phonenumber: state.vendorProfile.mobileNumber,
       
     },

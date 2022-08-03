@@ -34,13 +34,13 @@ function CustomerDetailProduct() {
 
  
  const config:any = {
-  public_key: vendorSettings.public_key?vendorSettings.public_key:"",
+  public_key: vendorSettings?vendorSettings.public_key:"",
   tx_ref: Date.now(),
   amount: parseInt(product.salePrice) * (quantity) ,
   currency: 'NGN',
   payment_options: 'card,mobilemoney,ussd',
   customer: {
-    email: user.email,
+    email: user?user.email:"",
     phonenumber: user.mobileNumber,
     name: user.firstName,
   },
@@ -51,8 +51,8 @@ function CustomerDetailProduct() {
   },
 };
 const componentProps :any= {
-  publicKey:vendorSettings.public_key?vendorSettings.public_key:"",
-  email:user.email,
+  publicKey:vendorSettings?vendorSettings.public_key:"",
+  email:user?user.email:"",
   amount: product.salePrice * quantity * 100,
   firstname:user.firstName,
   

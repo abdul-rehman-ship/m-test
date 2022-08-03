@@ -41,7 +41,7 @@ function CustomerCart() {
   currency: 'NGN',
   payment_options: 'card,mobilemoney,ussd',
   customer: {
-    email: user.email,
+    email: user? user.email:"",
     phonenumber: user.mobileNumber,
     name: user.firstName,
   },
@@ -124,7 +124,7 @@ dispatch(setUser({...user,cart:[...Object.values(newWish)]}))
 }
 const componentProps :any= {
   publicKey:vendorSettings? vendorSettings.public_key:"",
-  email:user.email,
+  email:user?user.email:"",
   amount: total_price *100,
   firstname:user.firstName,
   
