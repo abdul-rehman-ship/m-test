@@ -102,15 +102,11 @@ function Profile() {
     
 
     
-    if(!isVendor){
-        router.push("/")
-        
-        
-    }else{
+  
         getData()
         
         
-    } 
+    
     
    },[])
  

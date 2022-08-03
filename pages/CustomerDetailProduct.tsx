@@ -1,14 +1,14 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import CustomerNavbar from '../components/CustomerNavabar'
 import style from '../styles/vendor.module.css'
 import Carousel from 'react-bootstrap/Carousel';
 import {useDispatch,useSelector} from 'react-redux'
-import { addDoc,collection,doc, updateDoc,serverTimestamp } from 'firebase/firestore';
+import { addDoc,collection,doc, updateDoc,serverTimestamp, getDocs } from 'firebase/firestore';
 import {useRouter} from 'next/router'
 import CustomerProductItem from '../components/CustomerProductItem'
 import toast, { Toaster } from 'react-hot-toast';
 import { db } from '../Firebase';
-import {setLoading,setUser} from '../redux/slices/authSlice'
+import {setID, setLoading,setUser} from '../redux/slices/authSlice'
 import { AppDispatch } from '../redux/store';
 import Loading from '../components/Loading';
 import { PaystackButton } from 'react-paystack'
@@ -32,6 +32,17 @@ function CustomerDetailProduct() {
  const loading=useSelector((state:any)=>state.auth.loading)
 
 
+const getData=async()=>{
+  const data=await getDocs(collection(db,"users"))
+  data.forEach((snap)=>{
+    if(snap.data()){
+      dispatch(setID(snap.id))
+    }
+  })
+}
+useEffect(()=>{
+getData()
+},[])
  
  const config:any = {
   public_key: vendorSettings?vendorSettings.public_key:"",
@@ -87,7 +98,7 @@ dispatch(setUser({...user,cart:[]}))
 
 
 await updateDoc(doc(db,"products",product.id),
-{...product,initialStock:parseInt(product.initialStock)-quantity})
+{...product,initialStock: parseInt(product.initialStock)-quantity})
 
 const response = await axios.post('/api/sendMail',{
 email:user? user.email:"",
@@ -162,8 +173,16 @@ const handleFlutterPayment = useFlutterwave(config);
 
     dispatch(setLoading(true))
    if(quantity< product.initialStock){
+
+
     await updateDoc(doc(db, "users", userID), 
+
     {...user,cart:{...user.cart,[product.id]:{product,quantity}}})
+
+
+
+
+
   dispatch(setUser({...user,cart:{...user.cart,[product.id]:{product,quantity}}}))
     dispatch(setLoading(false))
 

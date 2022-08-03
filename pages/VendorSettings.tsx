@@ -56,15 +56,11 @@ export default function VendorSettings() {
         }
     }
    useEffect(()=>{
-    if(!isVendor){
-        router.push("/")
-        
-        
-    }else{
+  
         getData()
         
         
-    }
+    
 
     
         

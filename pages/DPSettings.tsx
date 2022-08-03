@@ -25,14 +25,7 @@ export default function DPSettings() {
         setUserPayment({...userPayment,[name]:value})
     }
     useEffect(()=>{
-        if(!userAuth){
-            toast.error("user not found")
-            router.push("/")
-        } else{
-            setIsAuthorized(true)
-            setUserPayment({paymentMethod:user.paymentMethod || "paystack",public_key:user.public_key})
-            
-        }
+      
     },[])
 
  const handleSubmit=async(e:any)=>{

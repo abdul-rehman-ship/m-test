@@ -35,10 +35,7 @@ function Profile() {
     
 
     
-        if(!user || !userAuth){
-            toast.error("user not found")
-            router.push("/")
-        } 
+     
     
    },[])
    const handleSubmit=async(e:any)=>{
