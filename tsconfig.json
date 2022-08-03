@@ -16,7 +16,11 @@
     "jsx": "preserve",
     "incremental": true,
     "noImplicitAny":false ,
+"typeRoots": [
+  "../node_modules/@types",
+  "../@types"
+]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/CustomerCart.jsx"],
+  "exclude": ["node_modules", "../../typings"]
 }

@@ -13,7 +13,7 @@ import {updateDoc,doc,collection,addDoc, serverTimestamp} from 'firebase/firesto
 import {db} from '../Firebase'
 import { PaystackButton } from 'react-paystack'
 
-const PaystackPop=require("@paystack/inline")
+import PaystackPop from '@paystack/inline-js'
 import axios from 'axios'
 import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
 
@@ -81,7 +81,7 @@ if( typeof window !=="undefined"){
     
     let basePrice:any=0
      basePrice= product.salePrice 
-     price=price+((quantity)  * (basePrice))
+     price= parseInt(price)+((quantity)  * (basePrice))
      price=parseFloat(price).toFixed(2)
   })
     setTotalPrice(price)
