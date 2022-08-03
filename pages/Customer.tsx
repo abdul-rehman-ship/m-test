@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import CustomerNavbar from '../components/CustomerNavabar'
 import Link from 'next/link'
 import style from '../styles/vendor.module.css'
-import { setLoading,setProducts ,setVendorSettings} from '../redux/slices/authSlice'
+import { setLoading,setProducts,setID ,setVendorSettings} from '../redux/slices/authSlice'
 import Loading from '../components/Loading'
 import { db } from '../Firebase'
 import { collection ,getDocs} from 'firebase/firestore'
@@ -34,6 +34,13 @@ export default function Customer() {
 
     },[])
     const getData = async () => {
+
+      const data5=await getDocs(collection(db,"users"))
+      data5.forEach((snap)=>{
+        if(snap.data()){
+          dispatch(setID(snap.id))
+        }
+      }) 
       dispatch(setLoading(true))
       let arr: any = [];
       const data = await getDocs(collection(db, "products"));
