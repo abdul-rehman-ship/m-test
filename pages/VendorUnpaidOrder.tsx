@@ -12,7 +12,8 @@ import Link from 'next/link';
 import VendorNavbar from '../components/VendorNavbar';
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../components/Loading';
-import PaystackPop from '@paystack/inline-js'
+import { PaystackButton } from 'react-paystack'
+import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
 
 
 
@@ -25,6 +26,7 @@ function VendorCustomers() {
     const [searchValue,setSearchValue]=useState("")
     const loading=useSelector((state:any)=>state.auth.loading)
     const [allEmployees,setallEmployees]:any=useState([])
+    const [totalAmount,setTotalAmount]:any=useState(0)
   const [selectedCustomers, setSelectedCustomers]: any = useState([]);
 
  const userID=useSelector((state:any)=>state.auth.id)
@@ -56,6 +58,66 @@ const [assign,setAssign]:any=useState("none")
     await setCustomers(arr);
     await setAllCustomers(arr)
   };
+  const componentProps :any= {
+    publicKey:vendorSettings.public_key,
+    email:state.vendorProfile.email,
+    amount: totalAmount * 100,
+    firstname:state.vendorProfile.buisnessName,
+    
+    text: "pay selected",
+    onSuccess:async () =>
+  
+    {
+      const deliveryDate=new Date()
+  
+  
+  deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
+  
+  dispatch(setLoading(true))
+    
+  allcustomers.forEach(async(i:any)=>{
+    if(selectedCustomers.includes(i.id)){
+      await updateDoc(doc(db, "orders", i.id), 
+      {
+
+       paid:true
+      })
+  }
+   
+  
+  })
+  
+
+
+
+
+   dispatch(setLoading(false))
+    toast.success("Orders paid Successfully")
+   getData()
+
+          
+    }
+      ,
+    onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+  }
+  const config:any = {
+    public_key: vendorSettings.public_key,
+    tx_ref: Date.now(),
+    amount: totalAmount ,
+    currency: 'NGN',
+    payment_options: 'card,mobilemoney,ussd',
+    customer: {
+      email:state.vendorProfile.email,
+      phonenumber: state.vendorProfile.mobileNumber,
+      
+    },
+    customizations: {
+      title: 'my Payment Title',
+      description: 'Payment for items ',
+      logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+    },
+  };
+const handleFlutterPayment = useFlutterwave(config);
   
 const getAllCustomers=async()=>{
   let arr: any = [];
@@ -153,7 +215,17 @@ const handleCheckChange=async(e:any,id:any)=>{
         }else{
           setSelectedCustomers(selectedCustomers.filter((id:any)=>id!==id))
         }
-        
+        let total_amount=0
+    allcustomers.forEach((i:any)=>{
+      if(selectedCustomers.includes(i.id)){
+      if(i.paid==false){
+        total_amount+= parseInt(i.deliveryPrice)
+      }
+    }
+    })
+    console.log(total_amount);
+    
+    setTotalAmount(total_amount)
         
         
     } catch (error) {
@@ -165,107 +237,91 @@ const handleCheckChange=async(e:any,id:any)=>{
 
 }
 const paySelected=async()=>{
-  try {
-    let total_amount=0
-    allcustomers.forEach((i:any)=>{
-      if(selectedCustomers.includes(i.id)){
-      if(i.paid==false){
-        total_amount+= parseInt(i.deliveryPrice)
-      }
-    }
-    })
-    const paystack=new PaystackPop()
-    paystack.newTransaction({
-      key:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
-      email:state.vendorProfile.email,
-      amount: total_amount * 100,
-      firstname:state.vendorProfile.buisnessName,
+  handleFlutterPayment({
+    callback: async(response) => {
       
-      onSuccess:async()=>{
-    dispatch(setLoading(true))
-    
-    allcustomers.forEach(async(i:any)=>{
-      if(selectedCustomers.includes(i.id)){
-        await updateDoc(doc(db, "orders", i.id), 
-        {
+      const deliveryDate=new Date()
   
-         paid:true
-        })
-    }
-     
+  
+  deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
+  
+  dispatch(setLoading(true))
     
-    })
-    
+  allcustomers.forEach(async(i:any)=>{
+    if(selectedCustomers.includes(i.id)){
+      await updateDoc(doc(db, "orders", i.id), 
+      {
+
+       paid:true
+      })
+  }
+   
+  
+  })
   
 
-  
-  
-     dispatch(setLoading(false))
-      toast.success("Orders paid Successfully")
-     getData()
-  
-        
-      },
-      onCencel:()=>{
-        toast.error("payment cencel")
-      }
-  
-    })
-    
-    
-  } catch (error) {
-      toast.error(error)
-      
-  }
+
+
+
+   dispatch(setLoading(false))
+    toast.success("Orders paid Successfully")
+   getData()
+
+
+        closePaymentModal() // this will close the modal programmatically
+    },
+    onClose: () => {},
+
+  })
 }
   const payAll=async()=>{
-    try {
-      let total_amount=0
-      allcustomers.forEach((i:any)=>{
-        if(i.paid==false){
-          total_amount+=i.totalPrice
-        }
-      })
-      const paystack=new PaystackPop()
-      paystack.newTransaction({
-        key:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
-        email:state.vendorProfile.email,
-        amount: total_amount * 100,
-        firstname:state.vendorProfile.buisnessName,
+    // try {
+    //   let total_amount=0
+    //   allcustomers.forEach((i:any)=>{
+    //     if(i.paid==false){
+    //       total_amount+=i.totalPrice
+    //     }
+    //   })
+    //   const paystack=new PaystackPop()
+    //   paystack.newTransaction({
+    //     key:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
+    //     email:state.vendorProfile.email,
+    //     amount: total_amount * 100,
+    //     firstname:state.vendorProfile.buisnessName,
         
-        onSuccess:async()=>{
-      dispatch(setLoading(true))
+    //     onSuccess:async()=>{
+    //   dispatch(setLoading(true))
       
-      allcustomers.forEach(async(i:any)=>{
-        await updateDoc(doc(db, "orders", i.id), 
-        {
+    //   allcustomers.forEach(async(i:any)=>{
+    //     await updateDoc(doc(db, "orders", i.id), 
+    //     {
  
-         paid:true
-        })
+    //      paid:true
+    //     })
       
-      })
+    //   })
       
     
 
     
     
-       dispatch(setLoading(false))
-        toast.success("Orders paid Successfully")
-       getData()
+    //    dispatch(setLoading(false))
+    //     toast.success("Orders paid Successfully")
+    //    getData()
     
           
-        },
-        onCencel:()=>{
-          toast.error("payment cencel")
-        }
+    //     },
+    //     onCencel:()=>{
+    //       toast.error("payment cencel")
+    //     }
     
-      })
+    //   })
       
       
-    } catch (error) {
-        toast.error(error)
+    // } catch (error) {
+    //     toast.error(error)
         
-    }
+    // }
       
     }
   
@@ -282,14 +338,35 @@ const paySelected=async()=>{
      
 <div className="row mt-4 mb-3   d-flex justify-content-end" >
            
-           <Link href=""><button onClick={payAll} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+{vendorSettings.paymentMethod=="paystack" ? 
 
-pay to all
+
+ 
+<Link href=""><button className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+
+<PaystackButton {...componentProps} className={`${style.login_btn}`}/>
 </button></Link>
+
+:
+<Link href={""}><button onClick={payAll} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+
+pay selected
+</button></Link>}
+
+{vendorSettings.paymentMethod=="paystack" ? 
+
+
+ 
+<Link href=""><button className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+
+<PaystackButton {...componentProps} className={`${style.login_btn}`}/>
+</button></Link>
+
+:
 <Link href={""}><button onClick={paySelected} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
 
 pay selected
-</button></Link>
+</button></Link>}
             
         </div>
 

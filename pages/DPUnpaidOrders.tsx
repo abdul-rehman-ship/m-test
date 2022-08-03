@@ -12,7 +12,7 @@ import Link from 'next/link';
 import VendorNavbar from '../components/DeliveryPartnerNavbar';
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../components/Loading';
-import PaystackPop from '@paystack/inline-js'
+
 
 
 

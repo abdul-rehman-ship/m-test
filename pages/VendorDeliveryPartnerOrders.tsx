@@ -12,7 +12,7 @@ import Link from 'next/link';
 import VendorNavbar from '../components/VendorNavbar';
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../components/Loading';
-import PaystackPop from '@paystack/inline-js'
+
 
 
 
@@ -160,108 +160,108 @@ const handleCheckChange=async(e:any,id:any)=>{
 
 }
 const paySelected=async()=>{
-  try {
-    let total_amount=0
-    allcustomers.forEach((i:any)=>{
-      if(selectedCustomers.includes(i.id)){
-      if(i.paid==false){
-        total_amount+= parseInt(i.deliveryPrice)
+  // try {
+  //   let total_amount=0
+  //   allcustomers.forEach((i:any)=>{
+  //     if(selectedCustomers.includes(i.id)){
+  //     if(i.paid==false){
+  //       total_amount+= parseInt(i.deliveryPrice)
         
-      }
-    }
-    })
-    const paystack=new PaystackPop()
-    paystack.newTransaction({
-      key:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
-      email:state.vendorProfile.email,
-      amount: total_amount * 100,
-      firstname:state.vendorProfile.buisnessName,
+  //     }
+  //   }
+  //   })
+  //   const paystack=new PaystackPop()
+  //   paystack.newTransaction({
+  //     key:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
+  //     email:state.vendorProfile.email,
+  //     amount: total_amount * 100,
+  //     firstname:state.vendorProfile.buisnessName,
       
-      onSuccess:async()=>{
-    dispatch(setLoading(true))
+  //     onSuccess:async()=>{
+  //   dispatch(setLoading(true))
     
-    allcustomers.forEach(async(i:any)=>{
-      if(selectedCustomers.includes(i.id)){
-        await updateDoc(doc(db, "orders", i.id), 
-        {
+  //   allcustomers.forEach(async(i:any)=>{
+  //     if(selectedCustomers.includes(i.id)){
+  //       await updateDoc(doc(db, "orders", i.id), 
+  //       {
   
-         paid:true
-        })
-    }
+  //        paid:true
+  //       })
+  //   }
      
     
-    })
+  //   })
     
   
 
   
   
-     dispatch(setLoading(false))
-      toast.success("Orders paid Successfully")
-     getData()
+  //    dispatch(setLoading(false))
+  //     toast.success("Orders paid Successfully")
+  //    getData()
   
         
-      },
-      onCencel:()=>{
-        toast.error("payment cencel")
-      }
+  //     },
+  //     onCencel:()=>{
+  //       toast.error("payment cencel")
+  //     }
   
-    })
+  //   })
     
     
-  } catch (error) {
-      toast.error(error)
+  // } catch (error) {
+  //     toast.error(error)
       
-  }
+  // }
 }
   const payAll=async()=>{
-    try {
-      let total_amount=0
-      allcustomers.forEach((i:any)=>{
-        if(i.paid==false){
-          total_amount+=i.totalPrice
-        }
-      })
-      const paystack=new PaystackPop()
-      paystack.newTransaction({
-        key:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
-        email:state.vendorProfile.email,
-        amount: total_amount * 100,
-        firstname:state.vendorProfile.buisnessName,
+    // try {
+    //   let total_amount=0
+    //   allcustomers.forEach((i:any)=>{
+    //     if(i.paid==false){
+    //       total_amount+=i.totalPrice
+    //     }
+    //   })
+    //   const paystack=new PaystackPop()
+    //   paystack.newTransaction({
+    //     key:"pk_test_529c008634299b5fdf147ab6be3283ceea233bc0",
+    //     email:state.vendorProfile.email,
+    //     amount: total_amount * 100,
+    //     firstname:state.vendorProfile.buisnessName,
         
-        onSuccess:async()=>{
-      dispatch(setLoading(true))
+    //     onSuccess:async()=>{
+    //   dispatch(setLoading(true))
       
-      allcustomers.forEach(async(i:any)=>{
-        await updateDoc(doc(db, "orders", i.id), 
-        {
+    //   allcustomers.forEach(async(i:any)=>{
+    //     await updateDoc(doc(db, "orders", i.id), 
+    //     {
  
-         paid:true
-        })
+    //      paid:true
+    //     })
       
-      })
+    //   })
       
     
 
     
     
-       dispatch(setLoading(false))
-        toast.success("Orders paid Successfully")
-       getData()
+    //    dispatch(setLoading(false))
+    //     toast.success("Orders paid Successfully")
+    //    getData()
     
           
-        },
-        onCencel:()=>{
-          toast.error("payment cencel")
-        }
+    //     },
+    //     onCencel:()=>{
+    //       toast.error("payment cencel")
+    //     }
     
-      })
+    //   })
       
       
-    } catch (error) {
-        toast.error(error)
+    // } catch (error) {
+    //     toast.error(error)
         
-    }
+    // }
       
     }
   
