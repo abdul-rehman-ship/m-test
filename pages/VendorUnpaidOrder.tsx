@@ -18,8 +18,8 @@ import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave
 
 
 function VendorCustomers() {
-    const state=useSelector((state:any)=>state.auth)
-    const vendorSettings=useSelector((state:any)=>state.auth.vendorSettings)
+    const state:any=useSelector((state:any)=>state.auth)
+    const vendorSettings:any=useSelector((state:any)=>state.auth.vendorSettings)
     const user=useSelector((state:any)=>state.auth.user)
     const dispatch=useDispatch<AppDispatch>()
     const [searchString,setSearchString]=useState("")
@@ -62,7 +62,7 @@ const [assign,setAssign]:any=useState("none")
     publicKey:vendorSettings?vendorSettings.public_key:"",
     email:state?state.vendorProfile.email:"",
     amount: totalAmount * 100,
-    firstname:state.vendorProfile.buisnessName,
+    firstname:state?state.vendorProfile.buisnessName:"",
     
     text: "pay selected",
     onSuccess:async () =>
@@ -108,7 +108,7 @@ const [assign,setAssign]:any=useState("none")
     payment_options: 'card,mobilemoney,ussd',
     customer: {
       email:state?state.vendorProfile.email:"",
-      phonenumber: state.vendorProfile.mobileNumber,
+      phonenumber: state?state.vendorProfile.mobileNumber:"",
       
     },
     customizations: {

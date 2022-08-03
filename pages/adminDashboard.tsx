@@ -15,10 +15,10 @@ import { AppDispatch } from '../redux/store'
 
 
 export default function AdminDashboard() {
-    const state=useSelector((state:any)=>state.auth)
+    const state:any=useSelector((state:any)=>state.auth)
     const router=useRouter()
-    const adminProfile=useSelector((state:any)=>state.auth.adminProfile)
-    const initialState={
+    const adminProfile:any=useSelector((state:any)=>state.auth.adminProfile)
+    const initialState:any={
       publicKey:"",
       buisnessName:"",
       SubscriptionFee:"",

@@ -20,10 +20,10 @@ import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave
 
 
 function CustomerCart() {
-    const user=useSelector((state:any)=>state.auth.user)
+    const user:any=useSelector((state:any)=>state.auth.user)
     const loading=useSelector((state:any)=>state.auth.loading)
-    const vendorSettings=useSelector((state:any)=>state.auth.vendorSettings)
-    let wish= user? user.cart:""
+    const vendorSettings:any=useSelector((state:any)=>state.auth.vendorSettings)
+    let wish:any= user? user.cart:""
     const [wishList,setWishList]=useState([])
     const dispatch=useDispatch<AppDispatch>()
     const [searchString,setSearchString]=useState("")
@@ -42,8 +42,8 @@ function CustomerCart() {
   payment_options: 'card,mobilemoney,ussd',
   customer: {
     email: user? user.email:"",
-    phonenumber: user.mobileNumber,
-    name: user.firstName,
+    phonenumber: user ?user.mobileNumber :"",
+    name: user ?user.firstName:"",
   },
   customizations: {
     title: 'my Payment Title',
@@ -168,7 +168,7 @@ deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfD
     await axios.post('/api/sendMail',{
     email:'rehmanabdul22655@gmail.com',
     buisnessName:"RehmanEnterprice",
-    customerName:user.firstName+" "+user.surname,
+    customerName:user ?user.firstName+" "+user.surname:"",
     item:product.name,
     price:product.salePrice,
     quantity:quantity,
@@ -299,9 +299,9 @@ try {
                  {...product,initialStock:parseInt(product.initialStock)-quantity})
                 
                  const response = await axios.post('/api/sendMail',{
-                  email:'rehmanabdul22655@gmail.com',
+                  email:user? user.email:"",
                   buisnessName:"RehmanEnterprice",
-                  customerName:user.firstName+" "+user.surname,
+                  customerName:user ?user.firstName+" "+user.surname :"",
                   item:product.name,
                   price:product.salePrice,
                   quantity:quantity,

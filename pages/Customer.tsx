@@ -13,13 +13,13 @@ import CustomerProductItem from '../components/CustomerProductItem'
 
 
 export default function Customer() {
-    const state=useSelector((state:any)=>state.auth)
+    const state:any=useSelector((state:any)=>state.auth)
     const dispatch=useDispatch()
     const router=useRouter()
-    const [products,setproducts]=useState([])
-    const [allProducts,setAllProducts]=useState([])
+    const [products,setproducts]:any=useState([])
+    const [allProducts,setAllProducts]:any=useState([])
     
-    const [searchString,setSearchString]=useState("")
+    const [searchString,setSearchString]:any=useState("")
 
     useEffect(() => {
       

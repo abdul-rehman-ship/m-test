@@ -21,12 +21,12 @@ import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave
 function CustomerDetailProduct() {
 
   const router=useRouter()
-  const vendorSettings=useSelector((state:any)=>state.auth.vendorSettings)
-  const product=useSelector((state:any)=>state.auth.product)
+  const vendorSettings:any=useSelector((state:any)=>state.auth.vendorSettings)
+  const product:any=useSelector((state:any)=>state.auth.product)
  const products=useSelector((state:any)=>state.auth.products)
  const [quantity,setQuantity]:any=useState(1)
- const userID=useSelector((state:any)=>state.auth.id)
- const user=useSelector((state:any)=>state.auth.user)
+ const userID:any=useSelector((state:any)=>state.auth.id)
+ const user:any=useSelector((state:any)=>state.auth.user)
  const dispatch=useDispatch<AppDispatch>()
 
  const loading=useSelector((state:any)=>state.auth.loading)
@@ -41,8 +41,8 @@ function CustomerDetailProduct() {
   payment_options: 'card,mobilemoney,ussd',
   customer: {
     email: user?user.email:"",
-    phonenumber: user.mobileNumber,
-    name: user.firstName,
+    phonenumber:user? user.mobileNumber:"",
+    name: user?user.firstName:"",
   },
   customizations: {
     title: 'my Payment Title',
@@ -54,7 +54,7 @@ const componentProps :any= {
   publicKey:vendorSettings?vendorSettings.public_key:"",
   email:user?user.email:"",
   amount: product.salePrice * quantity * 100,
-  firstname:user.firstName,
+  firstname:user?user.firstName:"",
   
   text: "checkout",
   onSuccess:async () =>
@@ -90,9 +90,9 @@ await updateDoc(doc(db,"products",product.id),
 {...product,initialStock:parseInt(product.initialStock)-quantity})
 
 const response = await axios.post('/api/sendMail',{
-email:'rehmanabdul22655@gmail.com',
+email:user? user.email:"",
 buisnessName:"RehmanEnterprice",
-customerName:user.firstName+" "+user.surname,
+customerName:user?user.firstName+" "+user.surname:"",
 item:product.name,
 price:product.salePrice,
 quantity:quantity,
@@ -234,7 +234,7 @@ try {
    {...product,initialStock:parseInt(product.initialStock)-quantity})
   
    const response = await axios.post('/api/sendMail',{
-    email:'rehmanabdul22655@gmail.com',
+    email:user?user.email:"",
     buisnessName:"RehmanEnterprice",
     customerName:user.firstName+" "+user.surname,
     item:product.name,

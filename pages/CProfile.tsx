@@ -14,14 +14,14 @@ import CustomerNavbar from '../components/CustomerNavabar'
 
 const  Profile=()=> {
 
-    const user=useSelector((state:RootState)=>state.auth.user)
-    const userAuth=useSelector((state:RootState)=>state.auth.currentUser)
-    const userID=useSelector((state:RootState)=>state.auth.id)
-    const loading=useSelector((state:RootState)=>state.auth.loading)
-    const router=useRouter()
+    const user:any=useSelector((state:RootState)=>state.auth.user)
+    const userAuth:any=useSelector((state:RootState)=>state.auth.currentUser)
+    const userID:any=useSelector((state:RootState)=>state.auth.id)
+    const loading:any=useSelector((state:RootState)=>state.auth.loading)
+    const router:any=useRouter()
     const dispatch=useDispatch<AppDispatch>()
 
-    const [mUser,setMUser]=useState(user?user:{
+    const [mUser,setMUser]:any=useState(user?user:{
         firstName:"",
         surname:"",
         email:"",
