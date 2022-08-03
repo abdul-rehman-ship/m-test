@@ -12,7 +12,6 @@ import {setLoading,setUser} from '../redux/slices/authSlice'
 import { AppDispatch } from '../redux/store';
 import Loading from '../components/Loading';
 import { PaystackButton } from 'react-paystack'
-import PaystackPop from '@paystack/inline-js'
 import axios from 'axios'
 import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
 
@@ -51,6 +50,68 @@ function CustomerDetailProduct() {
     logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
   },
 };
+const componentProps :any= {
+  publicKey:vendorSettings.public_key,
+  email:user.email,
+  amount: product.salePrice * quantity * 100,
+  firstname:user.firstName,
+  
+  text: "checkout",
+  onSuccess:async () =>
+
+  {
+    const deliveryDate=new Date()
+
+
+deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
+dispatch(setLoading(true))
+await addDoc(collection(db, "orders"), {
+  customer:userID,
+   product:product,
+   quantity:quantity,
+   totalPrice: parseInt(product.salePrice) * (quantity),
+   deliveryDate:deliveryDate,
+   createdAt:serverTimestamp(),
+   status:"open",
+   employee:{},  
+   deliveryPartner:{},
+   deliveryPrice:"0",
+   DPEmployee:{},
+   paid:false,
+
+
+})
+ await updateDoc(doc(db, "users", userID), 
+ {...user,cart:[]})
+dispatch(setUser({...user,cart:[]}))
+
+
+await updateDoc(doc(db,"products",product.id),
+{...product,initialStock:parseInt(product.initialStock)-quantity})
+
+const response = await axios.post('/api/sendMail',{
+email:'rehmanabdul22655@gmail.com',
+buisnessName:"RehmanEnterprice",
+customerName:user.firstName+" "+user.surname,
+item:product.name,
+price:product.salePrice,
+quantity:quantity,
+totalPrice: parseInt(product.salePrice) * (quantity),
+deliveryDate:deliveryDate.toDateString()
+
+})
+
+ dispatch(setLoading(false))
+  toast.success("Order Placed Successfully")
+ 
+
+    
+    
+        
+  }
+    ,
+  onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+}
 
 const handleFlutterPayment = useFlutterwave(config);
 
@@ -196,63 +257,64 @@ try {
       
         })
   
-      }else{
-        const paystack=new PaystackPop()
-        paystack.newTransaction({
-          key:vendorSettings.public_key,
-          email:user.email,
-          amount: parseInt(product.salePrice) * (quantity) *100,
-          firstname:user.firstName,
-          onSuccess:async()=>{
-        dispatch(setLoading(true))
-        await addDoc(collection(db, "orders"), {
-          customer:userID,
-           product:product,
-           quantity:quantity,
-           totalPrice: parseInt(product.salePrice) * (quantity),
-           deliveryDate:deliveryDate,
-           createdAt:serverTimestamp(),
-           status:"open",
-           employee:{},  
-           deliveryPartner:{},
-           deliveryPrice:"0",
-           DPEmployee:{},
-           paid:false,
+      }
+      // else{
+      //   const paystack=new PaystackPop()
+      //   paystack.newTransaction({
+      //     key:vendorSettings.public_key,
+      //     email:user.email,
+      //     amount: parseInt(product.salePrice) * (quantity) *100,
+      //     firstname:user.firstName,
+      //     onSuccess:async()=>{
+      //   dispatch(setLoading(true))
+      //   await addDoc(collection(db, "orders"), {
+      //     customer:userID,
+      //      product:product,
+      //      quantity:quantity,
+      //      totalPrice: parseInt(product.salePrice) * (quantity),
+      //      deliveryDate:deliveryDate,
+      //      createdAt:serverTimestamp(),
+      //      status:"open",
+      //      employee:{},  
+      //      deliveryPartner:{},
+      //      deliveryPrice:"0",
+      //      DPEmployee:{},
+      //      paid:false,
       
       
-       })
-         await updateDoc(doc(db, "users", userID), 
-         {...user,cart:[]})
-       dispatch(setUser({...user,cart:[]}))
+      //  })
+      //    await updateDoc(doc(db, "users", userID), 
+      //    {...user,cart:[]})
+      //  dispatch(setUser({...user,cart:[]}))
       
       
-       await updateDoc(doc(db,"products",product.id),
-       {...product,initialStock:parseInt(product.initialStock)-quantity})
+      //  await updateDoc(doc(db,"products",product.id),
+      //  {...product,initialStock:parseInt(product.initialStock)-quantity})
       
-       const response = await axios.post('/api/sendMail',{
-        email:'rehmanabdul22655@gmail.com',
-        buisnessName:"RehmanEnterprice",
-        customerName:user.firstName+" "+user.surname,
-        item:product.name,
-        price:product.salePrice,
-        quantity:quantity,
-        totalPrice: parseInt(product.salePrice) * (quantity),
-        deliveryDate:deliveryDate.toDateString()
+      //  const response = await axios.post('/api/sendMail',{
+      //   email:'rehmanabdul22655@gmail.com',
+      //   buisnessName:"RehmanEnterprice",
+      //   customerName:user.firstName+" "+user.surname,
+      //   item:product.name,
+      //   price:product.salePrice,
+      //   quantity:quantity,
+      //   totalPrice: parseInt(product.salePrice) * (quantity),
+      //   deliveryDate:deliveryDate.toDateString()
       
-      })
+      // })
       
-         dispatch(setLoading(false))
-          toast.success("Order Placed Successfully")
+      //    dispatch(setLoading(false))
+      //     toast.success("Order Placed Successfully")
          
       
             
-          },
-          onCencel:()=>{
-            toast.error("payment cencel")
-          }
+      //     },
+      //     onCencel:()=>{
+      //       toast.error("payment cencel")
+      //     }
       
-        })
-      }
+      //   })
+      // }
   
 
 
@@ -285,7 +347,14 @@ console.log(s);
 }
   
 
- 
+const checkStock=()=>{
+  if(product.initialStock >= quantity){
+    return true
+  }else{
+    toast.error("low stock")
+    return false
+  }
+}
 
 
   return (
@@ -343,7 +412,15 @@ console.log(s);
           <button className='btn' onClick={addToCart}>Add to Cart</button>
           <button className='btn' onClick={addToWishList}>Add to Wishlist </button>
 
-          <button className={`btn `}  onClick={buyNow}>Buy Now</button>
+
+
+      {vendorSettings.paymentMethod=="paystack"?
+      checkStock() == true ?  <PaystackButton {...componentProps}/>: ""
+    
+    :
+    <button className={`btn `}  onClick={buyNow}>Buy Now</button>
+
+    }
           
           
 
