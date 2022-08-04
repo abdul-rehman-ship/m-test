@@ -52,7 +52,7 @@ export default function CustomerNavbar() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link className={`mx-3 ${style.menu} `} onClick={handleSignOut}>sign out</Nav.Link>
+                <Nav.Link className={`mx-3 ${style.menu} `} onClick={handleSignOut}>Sign out</Nav.Link>
                  
                  
 

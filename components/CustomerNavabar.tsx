@@ -68,11 +68,11 @@ export default function CustomerNavbar() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"Customer"}>products</Link></Nav.Link>
+                <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"Customer"}>Products</Link></Nav.Link>
                  
-                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"Contact"}>contact</Link></Nav.Link>
-                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"CustomerOrders"}>orders</Link></Nav.Link>
-                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"CustomerCart"}>cart</Link></Nav.Link>
+                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"Contact"}>Contact</Link></Nav.Link>
+                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"CustomerOrders"}>Orders</Link></Nav.Link>
+                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"CustomerCart"}>Cart</Link></Nav.Link>
 
 
 

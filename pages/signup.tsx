@@ -28,6 +28,8 @@ export default function Signup() {
       WNumber: e.target.WNumber.value,
       accountType: e.target.accountType.value,
     };
+    
+    
     const res = validateRegister(user);
     if (res.length > 0) {
       let error = "";

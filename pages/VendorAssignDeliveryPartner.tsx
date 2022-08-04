@@ -55,6 +55,11 @@ const getAllCustomers=async()=>{
   });
 }
     useEffect(()=>{
+      if(!state.vendor){
+        router.push("/")
+        
+        
+    }
        getData()
        getAllCustomers()
     },[])

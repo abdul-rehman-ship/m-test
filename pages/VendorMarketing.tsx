@@ -61,12 +61,12 @@ const filter=async()=>{
 
 }
     useEffect(()=>{
-        // if(!state.vendor){
-        //     router.push("/")
+        if(!state.vendor){
+            router.push("/")
             
             
-        // }else{
-        // }
+        }else{
+        }
         getData()
 
     },[])
@@ -102,6 +102,7 @@ const selectedEmail=async()=>{
         dispatch(setLoading(true))
         allcustomers.forEach(async(customer:any)=>{
             if(selectedCustomers.includes(customer.id)){
+              
                 const response = await axios.post('/api/sendMailToCustomer',{
                     email:customer.email,
                     customerName:customer.firstName+" "+customer.surname,

@@ -42,10 +42,10 @@ function VendorAddNewProduct() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   useEffect(() => {
-    // if(!state.vendor){
-    //     router.push("/")
-    // }else{
-    // }
+    if(!state.vendor){
+        router.push("/")
+    }else{
+    }
   }, []);
   const uploadFiles = async (folder: string, files: File[]) => {
     const promises: any[] = [];

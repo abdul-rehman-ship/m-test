@@ -76,6 +76,11 @@ const filter=async()=>{
 
 }
     useEffect(()=>{
+      if(!state.vendor){
+        router.push("/")
+        
+        
+    }
        getData()
     },[])
 

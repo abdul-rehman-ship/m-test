@@ -70,6 +70,9 @@ const handleFlutterPayment = useFlutterwave(config);
 
   
 useEffect(()=>{
+  if(!user.email){
+    router.push("/")
+  }
 
 if( typeof window !=="undefined"){
   let price:any=0
@@ -187,7 +190,7 @@ deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfD
         
   }
     ,
-  onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+  onClose: () => alert("Wait! You need this product, don't go!!!!"),
 }
 
 

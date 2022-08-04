@@ -41,6 +41,9 @@ const getData=async()=>{
   })
 }
 useEffect(()=>{
+  if(!user.email){
+    router.push("/")
+  }
 getData()
 },[])
  

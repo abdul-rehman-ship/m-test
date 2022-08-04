@@ -23,12 +23,13 @@ export default function Customer() {
 
     useEffect(() => {
       
-
-        // if(!state.vendor){
-        //     router.push("/")
-            
-            
-        // }
+if(state){
+  if(!state.user.email){
+      router.push("/")
+  }
+}else{
+  router.push("/")
+}
         getData()
 
 

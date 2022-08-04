@@ -65,7 +65,11 @@ function CustomerCart() {
 
   
   
-  
+  useEffect(()=>{
+    if(!user.email){
+      router.push("/")
+    }
+  },[])
 
   
 

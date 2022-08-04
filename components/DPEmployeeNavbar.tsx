@@ -51,9 +51,9 @@ export default function DeliveryPartner() {
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                  
-                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"DPEmployeeDashboard"}>orders</Link></Nav.Link>
-                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"DPemployeeProfile"}>profile</Link></Nav.Link>
-                  <Nav.Link className={`mx-3 ${style.menu} `} onClick={handleSignOut} ><Link href={""}>sign out</Link></Nav.Link>
+                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"DPEmployeeDashboard"}>Orders</Link></Nav.Link>
+                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"DPemployeeProfile"}>Profile</Link></Nav.Link>
+                  <Nav.Link className={`mx-3 ${style.menu} `} onClick={handleSignOut} ><Link href={""}>Sign out</Link></Nav.Link>
                   
 
 

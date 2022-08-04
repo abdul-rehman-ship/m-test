@@ -72,6 +72,9 @@ const filter=async()=>{
 
 }
     useEffect(()=>{
+      if(!user.email){
+        router.push("/")
+      }
        getData()
     },[])
 

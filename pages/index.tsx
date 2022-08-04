@@ -93,20 +93,31 @@ const Home: NextPage = () => {
 
           if (doc.data().accountType === "customer") {
             dispatch(setUser(user2));
+            dispatch(setLoading(false));
 
-            return (router.push("/Customer"))
+      toast.success("Logged in successfully.");
+
+             router.push("/Customer")
           } else if (doc.data().accountType === "deliveryPartner") {
             dispatch(setUser(user2));
+            dispatch(setLoading(false));
 
-            return (router.push( "/DeliveryPartner"));
+      toast.success("Logged in successfully.");
+
+             (router.push( "/DeliveryPartner"));
           } else if (doc.data().accountType === "vendorEmployee") {
             dispatch(setUser(user2));
+            dispatch(setLoading(false));
 
-            return router.push( "/VendorEmployee")
+            toast.success("Logged in successfully.");
+             router.push( "/VendorEmployee")
           } else if (doc.data().accountType === "DPEmployee") {
             dispatch(setUser(user2));
+            dispatch(setLoading(false));
 
-            return router.push("/DPEmployeeDashboard");
+      toast.success("Logged in successfully.");
+
+             router.push("/DPEmployeeDashboard");
           } else {
             dispatch(setLoading(false));
 
@@ -114,9 +125,7 @@ const Home: NextPage = () => {
           }
         }
       });
-      dispatch(setLoading(false));
-
-      toast.success("Logged in successfully.");
+      
     } catch (error) {
       dispatch(setLoading(false));
       toast.error(error);

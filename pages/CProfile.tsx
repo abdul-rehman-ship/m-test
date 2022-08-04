@@ -31,6 +31,9 @@ const  Profile=()=> {
         mobileNumber:""
     })
    useEffect(()=>{
+        if(!user.email){
+                router.push("/")
+        }
     
 
     

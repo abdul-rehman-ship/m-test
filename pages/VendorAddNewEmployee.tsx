@@ -46,9 +46,9 @@ export default function Signup() {
   };
 
   useEffect(() => {
-    // if(!state.vendor){
-    //     router.push("/")
-    // }
+    if(!state.vendor){
+        router.push("/")
+    }
   }, []);
   return (
     <>

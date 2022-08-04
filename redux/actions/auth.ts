@@ -14,14 +14,15 @@ try {
 
     const result=await createUserWithEmailAndPassword(auth,user.email,user.password)
     toast.success('User created successfully')
-    await updateProfile(result.user,{displayName:user.firstName})
+    console.log(result);
+    console.log(user);
+    
+    
 
     let docRef:any;
     if(user.accountType=="customer"){
        docRef= await addDoc(collection(db, "users"), {
             email: user.email,
-            
-            
             firstName: user.firstName,
             surname: user.surname,
             buisnessAddress:user.buisnessAddress,
@@ -30,7 +31,7 @@ try {
             WNumber:user.WNumber,
             accountType:user.accountType,
             cart:[],
-            notes:user.notes,
+            notes:user.notes?user.notes:"",
             wishList:[],
             createdAt: serverTimestamp()
           });

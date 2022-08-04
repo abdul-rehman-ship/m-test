@@ -25,11 +25,11 @@ export default function VendorDashboard() {
     useEffect(() => {
       
 
-        // if(!state.vendor){
-        //     router.push("/")
+        if(!state.vendor){
+            router.push("/")
             
             
-        // }
+        }
         getData()
 
 

@@ -21,7 +21,8 @@ export default function VendorDashboard() {
     const [allProducts,setAllProducts]=useState([])
     const vendorSettings=useSelector((state:any)=>state.auth.vendorSettings)
     const vendorProfile=useSelector((state:any)=>state.auth.vendorProfile)
-
+    const [unAssignOrders,setUnAssignOrders]:any=useState(0)
+    const [lowStock,setLowStock]:any=useState(0)
     
     const [searchString,setSearchString]=useState("")
 const checkSubscription=async()=>{
@@ -131,26 +132,52 @@ const checkSubscription=async()=>{
     },[])
     const getData = async () => {
       dispatch(setLoading(true))
+      let settings:any={}
+      const data2 = await getDocs(collection(db, "vendor_settings"));
+      data2.forEach((snap)=>{
+          if(snap.data()){
+              
+              dispatch(setVendorSettings({...snap.data(),id:snap.id}))
+              settings={...snap.data()}
+              }
+      })
       let arr: any = [];
       const data = await getDocs(collection(db, "products"));
+      let low:any=1
       data.forEach((doc: any) => {
-        const prod={id:doc.id,...doc.data()}
+        if(doc.data()){
+          const prod={id:doc.id,...doc.data()}
           arr.push(prod);
+
+          if(doc.data().initialStock < settings? settings.minimumStockLevel:0){
+            low= parseInt(low) + 1
+          }
+        }
+       
         
       });
+      setLowStock(low)
      setAllProducts(arr)
       setProducts(arr)
-
-      const data2 = await getDocs(collection(db, "vendor_settings"));
-            data2.forEach((snap)=>{
+let un:any=0
+     
+            const data3 = await getDocs(collection(db, "orders"));
+            data3.forEach((snap)=>{
                 if(snap.data()){
-                    
-                    dispatch(setVendorSettings({...snap.data(),id:snap.id}))
-                    }
+                  if(!snap.data().employee.email)
+                  {
+                      un= parseInt(un)+1
+                  }
+                }
             })
+      
+            setUnAssignOrders(un)
       dispatch(setLoading(false))
      
     };
+    
+     
+    
 
 
     const onSearchChange=async(e:any)=>{
@@ -209,7 +236,7 @@ ${style.card} card mb-4 text-center p-5  shadow-sm
 ${style.card} card mb-4 text-center p-5  shadow-sm
     `}>
 
-<p>UnAssigned order</p>
+<p> {unAssignOrders} : UnAssigned order</p>
 
 
 </div>
@@ -224,7 +251,7 @@ ${style.card} card mb-4 text-center p-5  shadow-sm
 ${style.card} card mb-4 text-center p-5  shadow-sm
     `}>
 
-<p>Low Stock </p>
+<p>{ lowStock} : Low Stock </p>
 
 
 </div>

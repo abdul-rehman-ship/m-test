@@ -14,11 +14,11 @@ const router=useRouter()
 
 
     useEffect(()=>{
-        // if(!isVendor){
-        //     router.push("/")
+        if(!isVendor){
+            router.push("/")
             
             
-        // }
+        }
 
     },[])
   return (
@@ -32,12 +32,12 @@ const router=useRouter()
 
             <div className="col-md-6 col-lg-4 " >
 
-                <Link href={"VendorCustomerDetail"}>
+                <Link href={"VendorEmployeeDetail"}>
                 <div className={`
                 ${style.card} card mb-4 text-center p-5  shadow-sm
                     `}>
 
-                <p>info</p>
+                <p>Info</p>
 
 
                 </div>

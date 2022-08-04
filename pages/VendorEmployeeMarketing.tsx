@@ -61,13 +61,14 @@ const filter=async()=>{
 
 }
     useEffect(()=>{
-        // if(!state.vendor){
-        //     router.push("/")
+        if(!state.vendor){
+            router.push("/")
             
             
-        // }else{
-        // }
-        getData()
+        }else{
+          getData()
+
+        }
 
     },[])
 

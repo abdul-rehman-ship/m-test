@@ -131,6 +131,9 @@ const getAllCustomers=async()=>{
   });
 }
     useEffect(()=>{
+      if(!state.vendor){
+        router.push("/")
+    }
       if(typeof window !=="undefined"){
         getData()
         getAllCustomers()

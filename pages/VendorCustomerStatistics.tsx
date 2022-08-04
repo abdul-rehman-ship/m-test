@@ -59,11 +59,11 @@ const getData = async () => {
 
 
     useEffect(()=>{
-        // if(!isVendor){
-        //     router.push("/")
+        if(!isVendor){
+            router.push("/")
             
             
-        // }
+        }
 
 getData()
 

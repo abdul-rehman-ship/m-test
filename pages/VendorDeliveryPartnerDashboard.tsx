@@ -11,9 +11,9 @@ function VendorCustomerDashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    // if(!isVendor){
-    //     router.push("/")
-    // }
+    if(!isVendor){
+        router.push("/")
+    }
   }, []);
   return (
     <>
@@ -28,7 +28,7 @@ function VendorCustomerDashboard() {
                 ${style.card} card mb-4 text-center p-5  shadow-sm
                     `}
               >
-                <p>info</p>
+                <p>Info</p>
               </div>
             </Link>
           </div>

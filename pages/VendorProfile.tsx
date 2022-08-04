@@ -28,7 +28,7 @@ function Profile() {
         name:"",
         buisnessName:"",
         email:"",
-        businessAddress:"",
+        buisnessAddress:"",
         WNumber:"",
         mobileNumber:""
     }
@@ -101,7 +101,9 @@ function Profile() {
    useEffect(()=>{
     
 
-    
+    if(!isVendor){
+        router.push("/")
+    }
   
         getData()
         
@@ -137,7 +139,7 @@ function Profile() {
             <div className="col-md-6 mt-4">
                 
             <span>Buisness Name*</span>
-                    <input type="text"   name="BuisnessAddress" onChange={handleChange}  className="form-control mt-2" value={mUser.BuisnessName}  />
+                    <input type="text"   name="buisnessName" onChange={handleChange}  className="form-control mt-2" value={mUser.buisnessName}  />
 
             </div>
 

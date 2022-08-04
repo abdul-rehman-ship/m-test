@@ -34,10 +34,10 @@ function VendorUpdateProduct() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   useEffect(() => {
-    // if(!state.vendor){
-    //     router.push("/")
-    // }else{
-    // }
+    if(!state.vendor){
+        router.push("/")
+    }else{
+    }
     setProductItem(state.product)
     
     
