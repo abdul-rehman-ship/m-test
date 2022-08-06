@@ -242,11 +242,11 @@ const paySelected=async()=>{
            
            <Link href=""><button onClick={payAll} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
 
-pay to all
+mark all paid
 </button></Link>
 <Link href={""}><button onClick={paySelected} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
 
-pay selected
+mark selected paid
 </button></Link>
             
         </div>

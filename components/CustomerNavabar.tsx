@@ -54,7 +54,7 @@ export default function CustomerNavbar() {
 
      <Navbar   expand={'lg'} className={`mb-3  shadow-sm ${style.navbarContainer}`}>
           <Container >
-            <Navbar.Brand style={{color:"#1F7B6F"}}>Entre Flow</Navbar.Brand>
+            <Navbar.Brand style={{color:"#1F7B6F"}}>Customer Dashboard</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-lg`}
@@ -63,7 +63,7 @@ export default function CustomerNavbar() {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title style={{color:"#1F7B6F"}} id={`offcanvasNavbarLabel-expand-lg`}>
-                  Enter Flow 
+                  Customer Dashboard
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

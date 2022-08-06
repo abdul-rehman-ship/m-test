@@ -208,8 +208,9 @@ try {
         <tr>
           
           <th>product Name</th>
-          <th>price</th>
-          <th>customer Id</th>
+          <th>customer name</th>
+          <th>customer phone</th>
+          <th>customer address</th>
           <th>delivery date</th>
           <th>status</th>
           <th>assign</th>
@@ -225,8 +226,10 @@ try {
       return  <tr   key={index}>
 
             <td  onClick={()=>handleClick(customer.id,customer.customer)} className={compareDate(customer.deliveryDate)==false ?'': style.overDate}>{customer.product.name}</td>
-            <td onClick={()=>handleClick(customer.id,customer.customer)} className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.totalPrice}</td>
-            <td  onClick={()=>handleClick(customer.id,customer.customer)} className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer}</td>
+            <td onClick={()=>handleClick(customer.id,customer.customer)} className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.customer.firstName}</td>
+            <td  onClick={()=>handleClick(customer.id,customer.customer)} className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer.mobileNumber}</td>
+            <td  onClick={()=>handleClick(customer.id,customer.customer)} className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer.buisnessAddress}</td>
+
             <td  onClick={()=>handleClick(customer.id,customer.customer)} className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>{convertDate(customer.deliveryDate)}</td>
            
 <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>

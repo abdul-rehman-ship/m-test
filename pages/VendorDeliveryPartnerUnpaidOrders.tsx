@@ -172,11 +172,11 @@ const [assign,setAssign]:any=useState("none")
         
         if(doc.data().deliveryPartner.id==state.deliveryPartnerId){
 
-          if(doc.data().paid==false){
-            amount = parseInt(amount) + parseInt(doc.data().deliveryPrice)
-            
-          }
+            if(doc.data().paid==false){
+                amount = parseInt(amount) + parseInt(doc.data().deliveryPrice)
         arr.push({...doc.data(),id:doc.id})
+            }
+           
 
         }
 

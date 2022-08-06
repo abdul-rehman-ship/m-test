@@ -7,7 +7,7 @@ import {toast,Toaster} from 'react-hot-toast'
 import {useRouter} from 'next/router'
 import Loading from '../components/Loading'
 import { setLoading,setUser } from '../redux/slices/authSlice'
-import { collection, doc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '../Firebase'
 
 export default function DPSettings() {
@@ -15,7 +15,7 @@ export default function DPSettings() {
     const userAuth=useSelector((state:RootState)=>state.auth.currentUser)
     const loading=useSelector((state:any)=>state.auth.loading)
     const userID=useSelector((state:RootState)=>state.auth.id)
-    const [userPayment,setUserPayment]:any=useState({paymentMethod:"",public_key:""})
+    const [userPayment,setUserPayment]:any=useState({paymentMethod:user?user.paymentMethod:"",public_key:user?user.public_key:""})
     const router=useRouter()
     const dispatch=useDispatch<AppDispatch>()
     const[isAuthorized,setIsAuthorized]=useState(false)
@@ -31,9 +31,16 @@ export default function DPSettings() {
  const handleSubmit=async(e:any)=>{
     e.preventDefault()
     try {
+        let id:any=""
         dispatch(setLoading(true))
+        const data=await getDocs(collection(db,"users"))
+        data.forEach((i)=>{
+            if(i.data().email==user.email){
+                id=i.id
+            }
+        })
 
-        await updateDoc(doc(db,"users",userID),{
+        await updateDoc(doc(db,"users",id),{
             paymentMethod:userPayment.paymentMethod,
             public_key:userPayment.public_key
 
@@ -60,7 +67,7 @@ export default function DPSettings() {
 <Toaster/>
 {loading && <Loading/>}
 
-   {isAuthorized && <div className="container mt-5 ">
+    <div className="container mt-5 ">
 
    <form onSubmit={handleSubmit}>
 
@@ -94,7 +101,7 @@ export default function DPSettings() {
 
                 </div>
 </form>
-</div>}
+</div>
     
     
     

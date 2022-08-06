@@ -36,7 +36,7 @@ export default function DeliveryPartner() {
     <>
      <Navbar   expand={'lg'} className={`mb-3  shadow-sm ${style.navbarContainer}`}>
           <Container >
-            <Navbar.Brand style={{color:"#1F7B6F"}}>Entre Flow</Navbar.Brand>
+            <Navbar.Brand style={{color:"#1F7B6F"}}>Vendor Employee</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-md`}
@@ -45,13 +45,15 @@ export default function DeliveryPartner() {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title style={{color:"#1F7B6F"}} id={`offcanvasNavbarLabel-expand-lg`}>
-                  Enter Flow
+                  Vendor Employee
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"VendorEmployee"}>Products</Link></Nav.Link>
                   <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"VECustomers"}>Customers</Link></Nav.Link>
+                  <Nav.Link className={`mx-3 ${style.menu} `}> <Link href="VEDeliveryPartner">Delivery partners</Link></Nav.Link>
+                  
                   <Nav.Link className={`mx-3 ${style.menu} `}> <Link href="VEOrders">Orders</Link></Nav.Link>
                   <Nav.Link className={`mx-3 ${style.menu} `}> <Link href={"VendorEmployeeMarketing"}>Marketing</Link></Nav.Link>
 
@@ -67,7 +69,7 @@ export default function DeliveryPartner() {
                     <NavDropdown.Item >
                     <svg xmlns="http://www.w3.org/2000/svg" style={{height:'34px',width:'34px'}} className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
   <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>        <Link href="CProfile">Profile</Link>
+</svg>        <Link href="VEProfile">Profile</Link>
                     </NavDropdown.Item>
 
                     {/* <NavDropdown.Item>

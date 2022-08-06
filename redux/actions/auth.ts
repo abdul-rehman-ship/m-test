@@ -101,7 +101,7 @@ try {
     
     
     
-    return {result,id:docRef}
+    
     
 } catch (error:any) {
     

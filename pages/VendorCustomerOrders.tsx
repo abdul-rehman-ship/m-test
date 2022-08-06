@@ -36,7 +36,7 @@ function VendorCustomers() {
         
         
         
-      if (doc.data().customer === state.customerId) {
+      if (doc.data().customer.id === state.customerId) {
         arr.push({...doc.data(),id:doc.id})}
       
     });

@@ -7,8 +7,9 @@ import { collection, getDocs } from "firebase/firestore";
 import { AppDispatch, RootState } from "../redux/store";
 import Table from 'react-bootstrap/Table';
 import style from '../styles/vendor.module.css'
-import {setCustomerEmail, setCustomerId} from '../redux/slices/authSlice'
+import {setCustomerEmail, setCustomerId, setID} from '../redux/slices/authSlice'
 import Link from 'next/link';
+import { userAgent } from 'next/server';
 function DeliveryPartner() {
     const state=useSelector((state:any)=>state.auth)
     const dispatch=useDispatch<AppDispatch>()
@@ -22,6 +23,9 @@ function DeliveryPartner() {
     const data = await getDocs(collection(db, "users"));
     data.forEach((doc: any) => {
       if (doc.data().accountType === "DPEmployee") {
+        if(doc.data().email==state.user.email){
+dispatch(setID(doc.id))
+        }
         arr.push(doc.data());
       }
     });

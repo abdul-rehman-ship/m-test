@@ -34,7 +34,7 @@ export default function VendorNavbar() {
     <>
      <Navbar   expand={'lg'} className={`mb-3  shadow-sm ${style.navbarContainer}`}>
           <Container >
-            <Navbar.Brand style={{color:"#1F7B6F"}}>Entre Flow</Navbar.Brand>
+            <Navbar.Brand style={{color:"#1F7B6F"}}>Vendor Dashboard</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
            {Navbar ?  <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-lg`}
@@ -43,7 +43,7 @@ export default function VendorNavbar() {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title style={{color:"#1F7B6F"}} id={`offcanvasNavbarLabel-expand-lg`}>
-                  Enter Flow
+                  Vendor Dashboard
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
@@ -54,7 +54,7 @@ export default function VendorNavbar() {
                   <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"VendorDeliveryParnter"}>Delivery partners </Link></Nav.Link>
                  
                   <Nav.Link className={`mx-3 ${style.menu} `}> <Link href={"VendorOrders"}>Orders</Link></Nav.Link>
-                  <Nav.Link className={`mx-3 ${style.menu} `}> <Link href="VendorMarketing">Marketing</Link></Nav.Link>
+                  
                   
 
 
@@ -66,6 +66,9 @@ export default function VendorNavbar() {
                     
                     id={`offcanvasNavbarDropdown-expand-lg`}
                   >
+                    <NavDropdown.Item>
+                    <Link href="VendorMarketing">Marketing</Link>
+                    </NavDropdown.Item>
                      <NavDropdown.Item>
                       <Link href="VendorUnpaidOrder">Unpaid orders</Link>
                     </NavDropdown.Item>

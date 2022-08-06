@@ -39,7 +39,7 @@ const getData = async () => {
     data.forEach((doc: any) => {
       
 
-        if (doc.data().customer == mUser.id) {
+        if (doc.data().customer.id == mUser.id) {
             arr.push(doc.data())
             spend+= parseInt(doc.data().totalPrice)
             

@@ -8,7 +8,7 @@ import { setLoading,setVendorSettings } from '../redux/slices/authSlice'
 import Loading from '../components/Loading'
 import { db } from '../Firebase'
 import { collection ,getDocs} from 'firebase/firestore'
-import VendorProductItem from '../components/VendorProductItem'
+import VendorProductItem from '../components/VEProductItem'
 
 
 
@@ -23,13 +23,11 @@ export default function VendorDashboard() {
     const [searchString,setSearchString]=useState("")
 
     useEffect(() => {
-      
+      if(!state.user.email){
+        router.push("/")
+      }
 
-        if(!state.vendor){
-            router.push("/")
-            
-            
-        }
+     
         getData()
 
 
@@ -87,12 +85,16 @@ export default function VendorDashboard() {
     <>
     {state.loading && <Loading/>}
     <VendorNavbar/>
+
+
+
+{state.user.allowedRoles.products==true?
     <div className="container mt-4 pt-4">
 
     
     <div className="row mt-4 mb-3  d-flex justify-content-end" >
            
-           <Link href={"VendorAddNewProduct"}><button className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+           <Link href={"VEAddNewProduct"}><button className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
 
 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" style={{width:'20px',height:'20px'}} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -127,7 +129,12 @@ search
 }
 
 </div>
-    </div>
+    </div>:
+
+    <div className="container mt-5">
+      <h3 style={{fontFamily:"Poppins"}}>you are not allowed to see products </h3>
+    </div> 
+}
 
     
 

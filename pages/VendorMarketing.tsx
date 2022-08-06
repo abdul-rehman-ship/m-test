@@ -16,6 +16,7 @@ import axios from 'axios';
 import Loading from '../components/Loading';
 function VendorCustomers() {
     const state=useSelector((state:any)=>state.auth)
+    const loading=useSelector((state:any)=>state.auth.loading)
     const dispatch=useDispatch<AppDispatch>()
     const [searchString,setSearchString]=useState("")
     const router=useRouter()
@@ -100,6 +101,8 @@ const filter=async()=>{
 const selectedEmail=async()=>{
     try {
         dispatch(setLoading(true))
+        toast.success("Email Sent")
+        
         allcustomers.forEach(async(customer:any)=>{
             if(selectedCustomers.includes(customer.id)){
               
@@ -122,11 +125,14 @@ const selectedEmail=async()=>{
 }
 const allEmail=async()=>{
     try {
+      toast.success("Email Sent")
+
         dispatch(setLoading(true))
+
         allcustomers.forEach(async(customer:any)=>{
 
             const response = await axios.post('/api/sendMailToCustomer',{
-                email:'rehmanabdul22655@gmail.com',
+                email:customer?customer.email:"",
                 customerName:customer.firstName+" "+customer.surname,
              
             
@@ -183,7 +189,7 @@ const downloadInfo=async()=>{
 
 
 
-{state.loading && <Loading/>}
+{loading && <Loading/>}
 
     <div className="container pt-5">
      

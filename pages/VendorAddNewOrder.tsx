@@ -118,19 +118,29 @@ export default function VendorSettings() {
           }
           else{ 
             dispatch(setLoading(true))
-            let emp=mUser.employee && mUser.employee !== "none" ? mUser.employee :"" 
+            let empId=mUser.employee ? mUser.employee !== "none" ? mUser.employee :"" :""
+            allEmployees.forEach((emp:any)=>{
+              if(emp.id===empId){
+                mUser.employee=emp
+              }
+            })
              
-            console.log();
+            let cusId=mUser.customer ? mUser.customer !== "none" ? mUser.customer :"" :""
             
+            allCustomers.forEach((cus:any)=>{
+              if(cus.id===cusId){
+                mUser.customer=cus
+              }
+            })
             await addDoc(collection(db, "orders"), {
-                customer:mUser.customer,
+                customer:mUser.customer? mUser.customer :"",
                  product:selectedProducts,
                  quantity:mUser.quantity,
                  totalPrice: parseInt(selectedProducts.salePrice) * (mUser.quantity),
                  deliveryDate:new Date(mUser.deliveryDate),
                  createdAt:serverTimestamp(),
                  status:"open",
-                 employee:emp,  
+                 employee:mUser.employee?mUser.employee:"",  
                  deliveryPartner:{},
                  deliveryPrice:"0",
                  paid:false

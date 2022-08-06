@@ -80,7 +80,7 @@ const componentProps :any= {
 deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfDeliveryDate))
 dispatch(setLoading(true))
 await addDoc(collection(db, "orders"), {
-  customer:userID,
+  customer:user?user:"",
    product:product,
    quantity:quantity,
    totalPrice:product? parseInt(product.salePrice) * (quantity):"",
@@ -232,7 +232,7 @@ try {
               
     dispatch(setLoading(true))
     await addDoc(collection(db, "orders"), {
-      customer:userID,
+      customer:user?user:"",
        product:product,
        quantity:quantity,
        totalPrice: product?parseInt(product.salePrice) * (quantity):"",
@@ -370,7 +370,7 @@ console.log(s);
   
 
 const checkStock=()=>{
-  if(product.initialStock >= quantity){
+  if(parseInt(product.initialStock )>= parseInt(quantity)){
     return true
   }else{
     toast.error("low stock")

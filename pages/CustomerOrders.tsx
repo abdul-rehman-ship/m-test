@@ -33,10 +33,13 @@ function VendorCustomers() {
 
     data.forEach((doc: any) => {
 
-      if (doc.data().customer === userID) {
+
+      if (doc.data().customer.email === user.email) {
         arr.push({...doc.data(),id:doc.id})}
       
     });
+    
+    
     
     
     
@@ -178,7 +181,7 @@ if(res<=0){
 
             <td  className={compareDate(customer.deliveryDate)==false ?'': style.overDate}>{customer.product.name}</td>
             <td  className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.totalPrice}</td>
-            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{user.firstName}</td>
+            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer.firstName}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>{convertDate(customer.deliveryDate)}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>{customer.status}</td>
             

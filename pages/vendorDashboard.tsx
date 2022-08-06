@@ -25,6 +25,10 @@ export default function VendorDashboard() {
     const [lowStock,setLowStock]:any=useState(0)
     
     const [searchString,setSearchString]=useState("")
+    const [pending,setPending]:any=useState(0)
+    const [awaitngDelivery,setAwaitingDelivery]:any=useState(0)
+    const [pickedUp,setPickedUp]:any=useState(0)
+    const [returned,setReturned]:any=useState(0)
 const checkSubscription=async()=>{
   try {
             let profile:any=null;
@@ -143,13 +147,17 @@ const checkSubscription=async()=>{
       })
       let arr: any = [];
       const data = await getDocs(collection(db, "products"));
-      let low:any=1
+      let low:any=0
       data.forEach((doc: any) => {
         if(doc.data()){
           const prod={id:doc.id,...doc.data()}
           arr.push(prod);
+            
+            
 
-          if(doc.data().initialStock < settings? settings.minimumStockLevel:0){
+          if(parseInt(doc.data().initialStock) <  settings.minimumStockLevel){
+            
+            
             low= parseInt(low) + 1
           }
         }
@@ -160,17 +168,37 @@ const checkSubscription=async()=>{
      setAllProducts(arr)
       setProducts(arr)
 let un:any=0
+let open:any=0
+let pend:any=0
+let  picked:any=0
+let ret:any=0
      
             const data3 = await getDocs(collection(db, "orders"));
             data3.forEach((snap)=>{
                 if(snap.data()){
+                  if(snap.data().status=="open"){
+                    open=parseInt(open)+1
+
+                  }
+                  if(snap.data().status=="pickedUp"){
+                    picked=parseInt(picked)+1
+                  }
+                  if(snap.data().status=="returned"){
+                    ret=parseInt(ret)+1
+                  }
+                  if(snap.data().status=="Delivery"){
+                    pend=parseInt(pend)+1
+                  }
                   if(!snap.data().employee.email)
                   {
                       un= parseInt(un)+1
                   }
                 }
             })
-      
+            setPending(open)
+            setAwaitingDelivery(pend)
+            setPickedUp(picked)
+            setReturned(ret)
             setUnAssignOrders(un)
       dispatch(setLoading(false))
      
@@ -221,7 +249,7 @@ let un:any=0
 ${style.card} card mb-4 text-center p-5  shadow-sm
     `}>
 
-<p>Orders</p>
+<p> {pending? pending :0}:Pending Orders</p>
 
 
 </div>
@@ -229,6 +257,54 @@ ${style.card} card mb-4 text-center p-5  shadow-sm
 
     
 </div>
+
+<div className="col-md-6 col-lg-4 " >
+
+<Link href={"VendorOrders"}>
+<div className={`
+${style.card} card mb-4 text-center p-5  shadow-sm
+    `}>
+
+<p> {awaitngDelivery? awaitngDelivery :0}: Awaiting Delivery</p>
+
+
+</div>
+</Link>
+
+    
+</div>
+<div className="col-md-6 col-lg-4 " >
+
+<Link href={"VendorOrders"}>
+<div className={`
+${style.card} card mb-4 text-center p-5  shadow-sm
+    `}>
+
+<p> {pickedUp? pickedUp :0}: Picked Up  Orders</p>
+
+
+</div>
+</Link>
+
+    
+</div>
+<div className="col-md-6 col-lg-4 " >
+
+<Link href={"VendorOrders"}>
+<div className={`
+${style.card} card mb-4 text-center p-5  shadow-sm
+    `}>
+
+<p> {returned? returned :0}: Returned Orders</p>
+
+
+</div>
+</Link>
+
+    
+</div>
+
+
 <div className="col-md-6 col-lg-4 " >
 
 <Link href={"VendorUnAssignOrders"}>

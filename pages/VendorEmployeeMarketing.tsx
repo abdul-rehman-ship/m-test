@@ -61,14 +61,13 @@ const filter=async()=>{
 
 }
     useEffect(()=>{
-        if(!state.vendor){
-            router.push("/")
-            
-            
-        }else{
+      if(!state.user.email){
+        router.push("/")
+      }
+        
           getData()
 
-        }
+        
 
     },[])
 
@@ -185,82 +184,92 @@ const downloadInfo=async()=>{
 
 {state.loading && <Loading/>}
 
-    <div className="container pt-5">
+{state.user.allowedRoles.marketing==true?
+
+<div className="container pt-5">
      
-    <div className="row mt-4 mb-3  d-flex justify-content-end" >
-           
-           <Link href={""}><button onClick={selectedEmail} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
-Send  Selected Email
-</button></Link>
-<Link href={""}><button onClick={allEmail} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
-Send Email to All
-</button></Link>
-<Link href={""}><button onClick={downloadInfo} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
-Download info
-</button></Link>
+     <div className="row mt-4 mb-3  d-flex justify-content-end" >
             
-        </div>
-        <div className="row mt-4 mb-3  d-flex justify-content-end" >
-           
+            <Link href={""}><button onClick={selectedEmail} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+ Send  Selected Email
+ </button></Link>
+ <Link href={""}><button onClick={allEmail} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+ Send Email to All
+ </button></Link>
+ <Link href={""}><button onClick={downloadInfo} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+ Download info
+ </button></Link>
+             
+         </div>
+         <div className="row mt-4 mb-3  d-flex justify-content-end" >
+            
+        
+             
+         </div>
        
-            
-        </div>
-      
-        <div className='row mb-4'>
+         <div className='row mb-4'>
+ 
+ <div className="input-group">
+   <div className="form-outline">
+     <input type="search"  name="search" value={searchString} onChange={onSearchChange} className="form-control"  placeholder='search ...'/>
+     
+   </div>
+   <button type="button" onClick={filter} className={`btn ${style.search_btn}`} >
+ search
+   </button>
+ </div>
+ 
+ </div>
+         <Table striped bordered hover responsive>
+       <thead  className={style.table_head}>
+         <tr>
+           
+           <th>First Name</th>
+           <th>suname</th>
+           <th>email</th>
+           <th>Phone</th>
+           <th>select</th>
+ 
+         </tr>
+       </thead>
+       <tbody>
+       {customers.length>0?
+     customers.map((customer:any,index:number)=>{
+ 
+       return  <tr onClick={()=>handleClick(customer.email)} key={index}>
+ 
+             <td>{customer.firstName}</td>
+             <td>{customer.surname}</td>
+             <td>{customer.email}</td>
+             <td>{customer.mobileNumber}</td>
+             <td>
+                 <input type="checkbox" onChange={(e)=>handleCheckChange(e,customer)} />
+             </td>
+ 
+ 
+       </tr>
+     }
+     )
+ 
+ :<tr><td>...</td>
+ <td>...</td>
+ <td>...</td>
+ <td>...</td>
+ <td>...</td>
+ </tr>}
+        
+       </tbody>
+     </Table>
+             
+         </div>
 
-<div className="input-group">
-  <div className="form-outline">
-    <input type="search"  name="search" value={searchString} onChange={onSearchChange} className="form-control"  placeholder='search ...'/>
+:
+<div className="container mt-5">
+<h3 style={{fontFamily:"Poppins"}}>you are not allowed to see marketing </h3>
+</div> 
+}
+
     
-  </div>
-  <button type="button" onClick={filter} className={`btn ${style.search_btn}`} >
-search
-  </button>
-</div>
-
-</div>
-        <Table striped bordered hover responsive>
-      <thead  className={style.table_head}>
-        <tr>
-          
-          <th>First Name</th>
-          <th>suname</th>
-          <th>email</th>
-          <th>Phone</th>
-          <th>select</th>
-
-        </tr>
-      </thead>
-      <tbody>
-      {customers.length>0?
-    customers.map((customer:any,index:number)=>{
-
-      return  <tr onClick={()=>handleClick(customer.email)} key={index}>
-
-            <td>{customer.firstName}</td>
-            <td>{customer.surname}</td>
-            <td>{customer.email}</td>
-            <td>{customer.mobileNumber}</td>
-            <td>
-                <input type="checkbox" onChange={(e)=>handleCheckChange(e,customer)} />
-            </td>
-
-
-      </tr>
-    }
-    )
-
-:<tr><td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>}
-       
-      </tbody>
-    </Table>
-            
-        </div>
     </>
 
 

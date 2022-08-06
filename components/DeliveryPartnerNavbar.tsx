@@ -36,7 +36,7 @@ export default function DeliveryPartner() {
     <>
      <Navbar   expand={'lg'} className={`mb-3  shadow-sm ${style.navbarContainer}`}>
           <Container >
-            <Navbar.Brand style={{color:"#1F7B6F"}}>Entre Flow</Navbar.Brand>
+            <Navbar.Brand style={{color:"#1F7B6F"}}>Delivery partner</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-md`}
@@ -45,7 +45,7 @@ export default function DeliveryPartner() {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title style={{color:"#1F7B6F"}} id={`offcanvasNavbarLabel-expand-lg`}>
-                  Enter Flow
+                  Delivery partner
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

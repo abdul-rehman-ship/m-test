@@ -145,7 +145,7 @@ deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfD
       let {quantity}:any=value
     dispatch(setLoading(true))
     await addDoc(collection(db, "orders"), {
-      customer:userID,
+      customer:user?user:"",
        product:product,
        quantity:quantity,
        totalPrice: parseInt(product.salePrice) * (quantity),
@@ -187,7 +187,8 @@ deliveryDate.setDate(deliveryDate.getDate() + parseInt( vendorSettings.numberOfD
         
      
     })
-        
+        dispatch(setLoading(false))
+        toast.success("order placed successfully")
   }
     ,
   onClose: () => alert("Wait! You need this product, don't go!!!!"),
@@ -278,7 +279,7 @@ try {
           let{quantity}:any=value
                   dispatch(setLoading(true))
                   await addDoc(collection(db, "orders"), {
-                    customer:userID,
+                    customer:user?user:"",
                      product:product,
                      quantity:quantity,
                      totalPrice: parseInt(product.salePrice) * (quantity),

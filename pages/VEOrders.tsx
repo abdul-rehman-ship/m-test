@@ -31,8 +31,10 @@ function VendorCustomers() {
     let arr: any = [];
     const data = await getDocs(collection(db, "orders"));
     data.forEach((doc: any) => {
-      
+      if(doc.data().employee.email==user.email){
         arr.push({...doc.data(),id:doc.id})
+      }
+        
       
     });
     arr.reverse()    
@@ -42,6 +44,11 @@ function VendorCustomers() {
   
 
     useEffect(()=>{
+
+
+      if(!state.user.email){
+        router.push("/")
+      }
        getData()
     },[])
     const onSearchChange=async(e:any)=>{
@@ -52,18 +59,8 @@ function VendorCustomers() {
           setSearchString(e.target.value)
 
             setCustomers(allcustomers)
-        }else if(e.target.value="myOrders"){
-          setSearchString(e.target.value)
-          arr=[]
-                      allcustomers.forEach((c:any)=>{
-                        if(userID==c.employee.id){
-                            arr.push(c)
-                        }
-                })
-                setCustomers(arr)
-
-
         }
+      
         
         
         else{
@@ -133,7 +130,7 @@ const handleStatus=async(e:any,id:any)=>{
 
 
 
-
+{state.user.allowedRoles.orders==true?
     <div className="container  mt-5 pt-5">
    
 
@@ -144,7 +141,6 @@ const handleStatus=async(e:any,id:any)=>{
 <select name="status" value={searchString} onChange={onSearchChange} className="form-control mt-2" >
 
 <option value="all">all</option>
-<option value="myOrders">my orders</option>
 <option value="open">open</option>
 <option value="qualityCheck">Quality Check</option>
 <option value="packaging">packaging</option>
@@ -165,7 +161,7 @@ const handleStatus=async(e:any,id:any)=>{
           
           <th>product Name</th>
           <th>price</th>
-          <th>customer Id</th>
+          <th>customer name</th>
           <th>delivery date</th>
           <th>status</th>
 
@@ -179,7 +175,7 @@ const handleStatus=async(e:any,id:any)=>{
 
             <td  className={compareDate(customer.deliveryDate)==false ?'': style.overDate}>{customer.product.name}</td>
             <td  className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.totalPrice}</td>
-            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer}</td>
+            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer.firstName}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>{convertDate(customer.deliveryDate)}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>
 
@@ -187,12 +183,16 @@ const handleStatus=async(e:any,id:any)=>{
 
 
                     <option value="open">open</option>
-                    <option value="qualityCheck">Quality Check</option>
-                    <option value="packaging">packaging</option>
+
+                   {user.allowedRoles.quality==true ?
+                   <option value="qualityCheck">Quality Check</option>:""}
+                    
+                    {user.allowedRoles.delivery==true ?
                     <option value="Delivery">Delivery</option>
-                    <option value="pickedUp">picked up</option>
+                    :""}
+                    {user.allowedRoles.delivery==true ?
                     <option value="Return">Return</option>
-                    <option value="closed">Closed</option>
+                    :""}
 
 
 </select>
@@ -215,6 +215,13 @@ const handleStatus=async(e:any,id:any)=>{
     </Table>
             
         </div>
+
+
+:
+<div className="container mt-5">
+      <h3 style={{fontFamily:"Poppins"}}>you are not allowed to see orders </h3>
+    </div> 
+  }
     </>
 
 

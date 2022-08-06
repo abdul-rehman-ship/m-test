@@ -3,7 +3,7 @@
 import React, { useEffect,useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
-import VendorNavbar from '../components/VendorNavbar'
+import VendorNavbar from '../components/VendorEmployeeNavbar'
 import { db } from "../Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { AppDispatch, RootState } from "../redux/store";
@@ -57,7 +57,7 @@ const filter=async()=>{
 
 }
     useEffect(()=>{
-        if(!state.vendor){
+        if(!state.user.email){
             router.push("/")
             
             
@@ -68,10 +68,10 @@ const filter=async()=>{
 
     },[])
 
-    const handleClick=(email:any,id:any)=>{
-        dispatch(setCustomerEmail(email))
-        dispatch(setDeliveryPartnerId(id))
-        router.push(`/VendorDeliveryPartnerUnpaidOrders`)
+    const handleClick=(email:any,id)=>{
+        // dispatch(setCustomerEmail(email))
+        // dispatch(setDeliveryPartnerId(id))
+        // router.push(`/VendorDeliveryPartnerDashboard`)
   }
 
   return (<>
@@ -82,11 +82,19 @@ const filter=async()=>{
 
 
 
-    <div className="container  mt-5 pt-5">
+    <div className="container pt-5">
      
-<h4 className=' my-4' style={{fontFamily:"Poppins",margin:"1rem",color:'#1C7468'}}>choose Delivery person</h4>
 
-     
+        {/* <div className="row mt-4 mb-3  d-flex justify-content-end" >
+           
+           <Link href={"VendorAddNewDeliveryPartner"}><button className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
+
+<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" style={{width:'20px',height:'20px'}} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+<path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+</svg>Add New
+</button></Link>
+            
+        </div> */}
         <div className='row mb-4'>
 
 <div className="input-group">
@@ -145,4 +153,3 @@ search
 }
 
 export default VendorDeliveryPartner
-

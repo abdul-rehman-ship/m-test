@@ -10,52 +10,49 @@ import style from '../styles/profile.module.css'
 import { validateUpdateProfile } from '../components/valid'
 import { setLoading, setUser } from '../redux/slices/authSlice'
 import Loading from '../components/Loading'
-import CustomerNavbar from '../components/DPEmployeeNavbar'
+import CustomerNavbar from '../components/VendorEmployeeNavbar'
 
-function Profile() {
+const  Profile=()=> {
 
-    const user=useSelector((state:RootState)=>state.auth.user)
-    const userAuth=useSelector((state:RootState)=>state.auth.currentUser)
-    const userID=useSelector((state:RootState)=>state.auth.id)
-    const loading=useSelector((state:RootState)=>state.auth.loading)
-    const router=useRouter()
+    const user:any=useSelector((state:RootState)=>state.auth.user)
+    const userAuth:any=useSelector((state:RootState)=>state.auth.currentUser)
+    const userID:any=useSelector((state:RootState)=>state.auth.id)
+    const loading:any=useSelector((state:RootState)=>state.auth.loading)
+    const router:any=useRouter()
     const dispatch=useDispatch<AppDispatch>()
 
-    
-    const [mUser,setMUser]=useState(user?user:{
-      firstName:"",
-      surname:"",
-      email:"",
-     
-  })
+    const [mUser,setMUser]:any=useState(user?user:{
+        firstName:"",
+        surname:"",
+        email:"",
+        buisnessAddress:"",
+        state:"",
+        WNumber:"",
+        mobileNumber:""
+    })
    useEffect(()=>{
+        if(!user.email){
+                router.push("/")
+        }
     
 
     
-      
-    
+     
    },[])
    const handleSubmit=async(e:any)=>{
     e.preventDefault()
     try {
-        
-        {
+        const res=validateUpdateProfile(mUser)
+        if (res.length > 0) {
+            let error = "";
+            res.forEach((err: any) => {
+              error += err + "\n";
+            });
+            toast.error(error);
+          } else {
             dispatch(setLoading(true))
-            let id:any=""
-            
-            const data=await getDocs(collection(db,"users"))
-            data.forEach((i)=>{
-                if(i.data().email==user.email){
-                    id=i.id
-                }
-            })
-    
-            
-            await updateDoc(doc(db, "users", id), 
-                {
-                    firstName:mUser.firstName,
-                    surname:mUser.surname
-                })
+            await updateDoc(doc(db, "users", userID), 
+                mUser)
                 dispatch(setUser(mUser))
                 dispatch(setLoading(false))
                 toast.success("Profile Updated")
@@ -64,8 +61,6 @@ function Profile() {
           }
 
     }catch(error:any){
-      dispatch(setLoading(false))
-
         toast.error(error)
 
     }
@@ -114,13 +109,47 @@ function Profile() {
 
 
 </div>
+<div className="col-md-6 mt-4">
+    
+<span>buisness Address*</span>
+        <input type="text"  className="form-control mt-2"  name="buisnessAddress" onChange={handleChange}  value={mUser.buisnessAddress}  />
 
+</div>
 
 </div>
 
 
+<div className="row  mx-2">
+
+<div className="col-md-6 mt-4">
+        <span>Whats app Number*</span>
+        <input type="text"   className="form-control mt-2" name="WNumber" onChange={handleChange}  value={mUser.WNumber}  />
 
 
+</div>
+<div className="col-md-6 mt-4">
+    
+<span>Mobile Number*</span>
+        <input type="text"  className="form-control mt-2"  name="mobileNumber" onChange={handleChange}  value={mUser.mobileNumber}  />
+
+</div>
+
+</div>
+
+<div className="row mx-2">
+
+<div className="col-md-6 mt-4">
+        <span>State*</span>
+        <input type="text"   className="form-control mt-2"  name="state" onChange={handleChange}  value={mUser.state}  />
+
+
+</div>
+<div className="col-md-6 mt-4 text-center">
+    
+
+</div>
+
+</div>
 <div className="row  mx-2">
 
 <div className="col-md-6 mt-4">

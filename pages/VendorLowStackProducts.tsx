@@ -186,53 +186,7 @@ const checkSubscription=async()=>{
 
     
     <div className="container mt-4 pt-0">
-<div className="row">
-<div className="col-md-6 col-lg-4 " >
 
-<Link href={"VendorOrders"}>
-<div className={`
-${style.card} card mb-4 text-center p-5  shadow-sm
-    `}>
-
-<p>Orders</p>
-
-
-</div>
-</Link>
-
-    
-</div>
-<div className="col-md-6 col-lg-4 " >
-
-<Link href={"VendorUnAssignOrders"}>
-<div className={`
-${style.card} card mb-4 text-center p-5  shadow-sm
-    `}>
-
-<p>UnAssigned Orders</p>
-
-
-</div>
-</Link>
-
-    
-</div>
-<div className="col-md-6 col-lg-4 " >
-
-<Link href={"VendorLowStackProducts"}>
-<div className={`
-${style.card} card mb-4 text-center p-5  shadow-sm
-    `}>
-
-<p>Low Stock Products</p>
-
-
-</div>
-</Link>
-
-    
-</div>
-</div>
  
     <div className="row mt-4 mb-3  d-flex justify-content-end" >
            

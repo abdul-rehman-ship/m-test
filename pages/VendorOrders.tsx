@@ -98,9 +98,18 @@ const compareDate=(a:any)=>{
               
   const date2= (new Date(a.seconds * 1000).getTime())
   const time=date2-date
-  const res=Math.round(time /(1000*3600*24))
+  let buffer= vendorSettings ? parseInt(vendorSettings.orderDeliveryBuffer):0
   
   
+  let res=Math.round(time /(1000*3600*24)) 
+  res = res - buffer
+  
+  
+  
+  
+  
+  
+ 
  
 if(res<=0){
   return true
@@ -216,7 +225,7 @@ Assign delivery partner
           
           <th>product Name</th>
           <th>price</th>
-          <th>customer Id</th>
+          <th>customer name</th>
           <th>delivery date</th>
           <th>status</th>
           <th>assign to employee</th>
@@ -232,7 +241,8 @@ Assign delivery partner
 
             <td  className={compareDate(customer.deliveryDate)==false ?'': style.overDate}>{customer.product.name}</td>
             <td  className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.totalPrice}</td>
-            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer}</td>
+            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer.firstName}</td>
+            
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>{convertDate(customer.deliveryDate)}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>
 
