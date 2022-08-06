@@ -88,7 +88,7 @@ export default function VendorDashboard() {
 
 
 
-{state.user.allowedRoles.products==true?
+{ state.user && state.user.allowedRoles.products==true?
     <div className="container mt-4 pt-4">
 
     

@@ -75,7 +75,7 @@ const filter=async()=>{
 
 
 {
-  state.user.allowedRoles.customers==true?
+  state.user && state.user.allowedRoles.customers==true?
 
     <div className="container pt-5">
      

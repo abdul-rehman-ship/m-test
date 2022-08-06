@@ -80,7 +80,7 @@ const filter=async()=>{
 
 
 
-
+{state.user && state.user.allowedRoles.delivery==true?
 
     <div className="container pt-5">
      
@@ -145,6 +145,14 @@ search
     </Table>
             
         </div>
+
+        :
+        
+        <div className="container mt-5">
+      <h3 style={{fontFamily:"Poppins"}}>you are not allowed to see delivery partners </h3>
+    </div> 
+
+        }
     </>
 
 

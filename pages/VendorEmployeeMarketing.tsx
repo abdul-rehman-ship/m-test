@@ -184,7 +184,7 @@ const downloadInfo=async()=>{
 
 {state.loading && <Loading/>}
 
-{state.user.allowedRoles.marketing==true?
+{state.user && state.user.allowedRoles.marketing==true?
 
 <div className="container pt-5">
      

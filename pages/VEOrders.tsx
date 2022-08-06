@@ -130,7 +130,7 @@ const handleStatus=async(e:any,id:any)=>{
 
 
 
-{state.user.allowedRoles.orders==true?
+{state.user && state.user.allowedRoles.orders==true?
     <div className="container  mt-5 pt-5">
    
 
@@ -184,13 +184,13 @@ const handleStatus=async(e:any,id:any)=>{
 
                     <option value="open">open</option>
 
-                   {user.allowedRoles.quality==true ?
+                   {user && user.allowedRoles.quality==true ?
                    <option value="qualityCheck">Quality Check</option>:""}
                     
-                    {user.allowedRoles.delivery==true ?
+                    {user && user.allowedRoles.delivery==true ?
                     <option value="Delivery">Delivery</option>
                     :""}
-                    {user.allowedRoles.delivery==true ?
+                    {user && user.allowedRoles.delivery==true ?
                     <option value="Return">Return</option>
                     :""}
 
