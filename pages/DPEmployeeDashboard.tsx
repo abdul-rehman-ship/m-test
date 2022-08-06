@@ -37,8 +37,10 @@ const [assign,setAssign]:any=useState("none")
     let arr: any = [];
     const data = await getDocs(collection(db, "orders"));
     data.forEach((doc: any) => {
-      
+      if(doc.data().DPEmployee.email==state.user.email){
         arr.push({...doc.data(),id:doc.id})
+
+      }
       
     });
     arr.reverse()  
@@ -54,7 +56,7 @@ const getAllCustomers=async()=>{
   let arr: any = [];
   const data = await getDocs(collection(db, "users"));
   data.forEach(async(doc: any) => {
-    if(doc.data().accountType==="DPEmployee"){
+    if(doc.data().accountType==="DPEmployee" ){
       arr.push({...doc.data(),id:doc.id})
 
     }

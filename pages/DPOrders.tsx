@@ -37,8 +37,11 @@ const [assign,setAssign]:any=useState("none")
     let arr: any = [];
     const data = await getDocs(collection(db, "orders"));
     data.forEach((doc: any) => {
-      
+      if(doc.data().deliveryPartner.email==state.user.email){
         arr.push({...doc.data(),id:doc.id})
+      }
+      
+        
       
     });
     arr.reverse()  
@@ -263,7 +266,7 @@ try {
               
             
               {
-                <select name="status"  value={customer.employee.none==true ?"none" :customer.employee.id}  onChange={(e)=>handleEmployee(e,customer)} className="form-control mt-2" >
+                <select name="status"  value={customer.DPEmployee.none==true ?"none" :customer.DPEmployee.id}  onChange={(e)=>handleEmployee(e,customer)} className="form-control mt-2" >
                 <option value={"none"}>none</option>
               {allEmployees.length>0?
                 allEmployees.map((employee:any,index:number)=>{

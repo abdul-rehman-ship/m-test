@@ -41,23 +41,24 @@ function Profile() {
    const handleSubmit=async(e:any)=>{
     e.preventDefault()
     try {
-        const res=validateUpdateProfile(mUser)
-        if (res.length > 0) {
-            let error = "";
-            res.forEach((err: any) => {
-              error += err + "\n";
-            });
-            toast.error(error);
-          } else {
+        let id:any=""
+        dispatch(setLoading(true))
+        const data=await getDocs(collection(db,"users"))
+        data.forEach((i)=>{
+            if(i.data().email==user.email){
+                id=i.id
+            }
+        })
+
             dispatch(setLoading(true))
-            await updateDoc(doc(db, "users", userID), 
+            await updateDoc(doc(db, "users", id), 
                 mUser)
                 dispatch(setUser(mUser))
                 dispatch(setLoading(false))
                 toast.success("Profile Updated")
           
           
-          }
+          
 
     }catch(error:any){
         toast.error(error)

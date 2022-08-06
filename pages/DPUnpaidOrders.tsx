@@ -40,14 +40,17 @@ const [assign,setAssign]:any=useState("none")
     let arr: any = [];
     const data = await getDocs(collection(db, "orders"));
     data.forEach((doc: any) => {
-
-        if(doc.data().deliveryPartner.id===state.id){
+      
+      
+if(doc.data().paid==false){
+        if(doc.data().deliveryPartner.email==state.user.email){
           
             arr.push({...doc.data(),id:doc.id})
     
             
     
         } 
+      }
         
        
       
@@ -262,8 +265,9 @@ mark selected paid
         <tr>
           
           <th>product Name</th>
-          <th>price</th>
-          <th>customer Id</th>
+          <th>customer name</th>
+          <th>customer phone</th>
+          <th>customer address</th>
           <th>delivery date</th>
           <th>status</th>
           <th>select</th>
@@ -278,8 +282,9 @@ mark selected paid
       return  <tr onClick={()=>handleClick(customer.id)}  key={index}>
 
             <td  className={compareDate(customer.deliveryDate)==false ?'': style.overDate}>{customer.product.name}</td>
-            <td  className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.totalPrice}</td>
-            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer}</td>
+            <td  className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.customer.firstName}</td>
+            <td  className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.customer.mobileNumber}</td>
+            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer.buisnessAddress}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>{convertDate(customer.deliveryDate)}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>
 
