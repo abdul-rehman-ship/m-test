@@ -82,7 +82,7 @@ export default function AdminDashboard() {
         }
 
           
-                dispatch(setAdminProfile(mUser))
+                dispatch(setAdminProfile({...mUser,id:adminProfile.id}))
                 dispatch(setLoading(false))
                 toast.success(" Updated Successfully")
           

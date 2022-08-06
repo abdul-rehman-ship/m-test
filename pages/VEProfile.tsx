@@ -50,8 +50,18 @@ const  Profile=()=> {
             });
             toast.error(error);
           } else {
+
+                let id:any=""
+                dispatch(setLoading(true))
+                const data=await getDocs(collection(db,"users"))
+                data.forEach((i)=>{
+                    if(i.data().email==user.email){
+                        id=i.id
+                    }
+                })
+
             dispatch(setLoading(true))
-            await updateDoc(doc(db, "users", userID), 
+            await updateDoc(doc(db, "users", id), 
                 mUser)
                 dispatch(setUser(mUser))
                 dispatch(setLoading(false))

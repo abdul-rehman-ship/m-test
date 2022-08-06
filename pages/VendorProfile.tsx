@@ -84,7 +84,7 @@ function Profile() {
             }
     
               
-                    dispatch(setVendorProfile(mUser))
+                    dispatch(setVendorProfile({...mUser,id:vendorProfile.id}))
                     dispatch(setLoading(false))
                     toast.success("Profile Updated")
               
