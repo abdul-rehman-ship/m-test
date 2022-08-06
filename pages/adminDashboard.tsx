@@ -47,10 +47,10 @@ export default function AdminDashboard() {
 }
 
     useEffect(() => {
-        // if(!state.admin){
-        //     router.push("/v1/EntreFlow/Employee/admin/login")
+        if(!state.admin){
+            router.push("/v1/EntreFlow/Employee/admin/login")
             
-        // }
+        }
         getData()
 
 
