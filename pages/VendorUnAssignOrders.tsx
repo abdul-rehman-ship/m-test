@@ -218,7 +218,7 @@ Assign Delivery partner
           
           <th>product Name</th>
           <th>price</th>
-          <th>customer Id</th>
+          <th>customer name</th>
           <th>delivery date</th>
           <th>status</th>
           <th>assign to employee</th>
@@ -234,7 +234,7 @@ Assign Delivery partner
 
             <td  className={compareDate(customer.deliveryDate)==false ?'': style.overDate}>{customer.product.name}</td>
             <td  className={compareDate(customer.deliveryDate)==false ? '': style.overDate}>{customer.totalPrice}</td>
-            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer}</td>
+            <td  className={compareDate(customer.deliveryDate)==false ? '':style.overDate} >{customer.customer.firstName}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>{convertDate(customer.deliveryDate)}</td>
             <td className={compareDate(customer.deliveryDate)==true  ?  style.overDate:''}>
 
