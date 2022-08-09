@@ -8,7 +8,7 @@ import Table from 'react-bootstrap/Table';
 import style from '../styles/vendor.module.css'
 import { AppDispatch } from '../redux/store'
 import {useRouter} from 'next/router'
-import {updateDoc,doc,collection,addDoc, serverTimestamp} from 'firebase/firestore'
+import {updateDoc,doc,collection,addDoc, serverTimestamp, getDoc, getDocs} from 'firebase/firestore'
 
 import {db} from '../Firebase'
 import { PaystackButton } from 'react-paystack'
@@ -67,14 +67,23 @@ const handleFlutterPayment = useFlutterwave(config);
   
   
   
+const getData=async()=>{
+  try {
+    
+    const data=await getDoc(doc(db,userID))
+    dispatch(setUser(data.data()))
 
+      
+  } catch (error) {
+    toast.error(error.message)
+    
+  }
+}
   
 useEffect(()=>{
   if(!user.email){
     router.push("/")
   }
-
-if( typeof window !=="undefined"){
   let price:any=0
   Object.entries(wish).forEach(([key, value]) => {
     
@@ -87,10 +96,7 @@ if( typeof window !=="undefined"){
      price=parseFloat(price).toFixed(2)
   })
     setTotalPrice(price)
-    
-}else{
-  router.push("/")
-}
+
     
 },[])
 const removeFromWishlist=async(k:any)=>{
@@ -349,6 +355,64 @@ try {
 
 
 }
+
+const handleQuantity=async(e:any,key:any,product:any)=>{
+  e.preventDefault()
+try {
+  dispatch(setLoading(true))
+  const value=e.target.quantity.value
+  let id:any=""
+  const data=await getDocs(collection(db, "users"))
+  data.forEach((doc:any)=>{
+    if(doc.data()){
+      if(doc.data().email===user.email){
+        id=doc.id
+        
+        
+      }
+    }
+  })
+  console.log({...user,cart:{...user.cart,[key]:{product,quantity:parseInt(value)}}});
+  
+  await updateDoc(doc(db, "users", id), {
+
+    ...user,cart:{...user.cart,[key]:{product,quantity:value}}
+
+  })
+  dispatch(setUser({
+
+    ...user,cart:{...user.cart,[key]:{product,quantity:value}}
+
+  }))
+let USER:any={
+
+  ...user,cart:{...user.cart,[key]:{product,quantity:value}}
+
+}
+ wish=USER?USER.cart:""
+  let price:any=0
+  Object.entries(wish).forEach(([key, value]) => {
+    
+    const{product}:any=value
+    const {quantity}:any=value
+    
+    let basePrice:any=0
+     basePrice= product.salePrice 
+     price= parseInt(price)+((parseInt(quantity))  * (basePrice))
+     price=parseFloat(price).toFixed(2)
+  })
+    setTotalPrice(price)
+
+    
+  // getData()
+  dispatch(setLoading(false))
+  toast.success("Quantity Updated")
+} catch (error) {
+  dispatch(setLoading(false))
+  toast.error(error.message)
+  
+}
+}
   return (
     <>
     <Toaster/>
@@ -367,6 +431,7 @@ try {
           <th>Product Name</th>
           <th>Product Price</th>
           <th>Quantity</th>
+          <th>Change Quantity</th>
           <th>Action</th>
           
 
@@ -375,7 +440,7 @@ try {
       <tbody>
        
         
-      {Object.entries(wish).length>0?
+      {wish && Object.entries(wish).length>0?
   Object.entries(wish).map(([key, value])=>{
     let {product}:any=value
     let {quantity}:any=value
@@ -385,6 +450,10 @@ try {
             <td onClick={()=>handleClick(key)}>{  product.name}</td>
             <td onClick={()=>handleClick(key)}>{product.salePrice}</td>
             <td onClick={()=>handleClick(key)}>{quantity}</td>
+            <td>
+              <form onSubmit={(e)=>handleQuantity(e,key,product)}> <input type="number" name='quantity' min={1}  className='form-control' placeholder='Enter Quantity'/>
+              </form>
+              </td>
             <td><button className='btn btn-danger' onClick={()=>removeFromWishlist(key)}>Remove</button></td>
             
 

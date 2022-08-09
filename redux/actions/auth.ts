@@ -1,7 +1,7 @@
 import { IRegister } from "../../components/types";
 import { auth } from "../../Firebase";
 import {browserLocalPersistence, createUserWithEmailAndPassword,updateProfile,
-    signInWithEmailAndPassword,sendPasswordResetEmail,setPersistence} from 'firebase/auth'
+    signInWithEmailAndPassword,sendPasswordResetEmail,setPersistence, signOut} from 'firebase/auth'
 import toast from "react-hot-toast";
 import { db } from "../../Firebase";
 import { useRouter } from "next/router";
@@ -13,9 +13,6 @@ export const registerApi=async(user:any)=>{
 try {
 
     const result=await createUserWithEmailAndPassword(auth,user.email,user.password)
-    toast.success('User created successfully')
-    console.log(result);
-    console.log(user);
     
     
 
@@ -97,9 +94,10 @@ try {
       });
 
     }
-
+ toast.success("user created successfully")
+ 
     
-    
+return
     
     
     

@@ -7,6 +7,7 @@ import style from '../styles/vendor.module.css'
 import Link from 'next/link'
 import { db } from "../Firebase";
 import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import style2 from '../styles/profile.module.css'
 
 function VendorCustomerDashboard() {
 
@@ -75,8 +76,11 @@ getData()
     
     <VendorNavbar/>
 
-
-    <div className="container mt-5" >
+    <div className={` ${style2.formContainer} container mt-5 `} >
+            <Link href="VendorCustomerDashboard">
+            <button className={`btn ${style2.back_btn} btn-light `} style={{fontSize:'large'}}>
+            &#8592; Back </button></Link>
+      
         <div className="row mt-4">
 
             <div className="col-md-6 col-lg-4 " >
@@ -117,7 +121,7 @@ getData()
     ${style.card} card mb-4 text-center p-5  shadow-sm
         `}>
 
-    <p>Sales % :{salesPercent}
+    <p>Sales %:{salesPercent}
 
     </p>
 
@@ -134,7 +138,7 @@ getData()
     ${style.card} card mb-4 text-center p-5  shadow-sm
         `}>
 
-    <p>Oders % :{ordersPercent}</p>
+    <p>Oders %:{ordersPercent}</p>
 
 
     </div>

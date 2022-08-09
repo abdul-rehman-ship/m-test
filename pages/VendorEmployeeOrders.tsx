@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table';
 import style from '../styles/vendor.module.css'
 import {setCustomerEmail} from '../redux/slices/authSlice'
 import Link from 'next/link';
+import style2 from '../styles/profile.module.css'
 
 import { Toaster } from 'react-hot-toast';
 import Loading from '../components/Loading';
@@ -116,8 +117,10 @@ if(res<=0){
 
 
 
-    <div className="container  mt-5 pt-5">
-     
+<div className={` ${style2.formContainer} container mt-5 `} >
+            <Link href="VendorEmployeeDashboard">
+            <button className={`btn ${style2.back_btn} btn-light `} style={{fontSize:'large'}}>
+            &#8592; Back </button></Link>
 
       
         <div className='row mb-4'>
@@ -128,11 +131,11 @@ if(res<=0){
         <Table striped bordered hover responsive>
       <thead  className={style.table_head}>
         <tr>
-          <th>order id</th>
-          <th>product Name</th>
-          <th>price</th>
-          <th>delivery date</th>
-          <th>status</th>
+          <th>Order Id</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Delivery Date</th>
+          <th>Status</th>
 
         </tr>
       </thead>

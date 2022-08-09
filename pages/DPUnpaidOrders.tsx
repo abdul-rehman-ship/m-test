@@ -245,11 +245,11 @@ const paySelected=async()=>{
            
            <Link href=""><button onClick={payAll} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
 
-mark all paid
+Mark All Paid
 </button></Link>
 <Link href={""}><button onClick={paySelected} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
 
-mark selected paid
+Mark Selected Paid
 </button></Link>
             
         </div>
@@ -264,13 +264,13 @@ mark selected paid
       <thead  className={style.table_head}>
         <tr>
           
-          <th>product Name</th>
-          <th>customer name</th>
-          <th>customer phone</th>
-          <th>customer address</th>
-          <th>delivery date</th>
-          <th>status</th>
-          <th>select</th>
+          <th>Product Name</th>
+          <th>Customer name</th>
+          <th>Customer phone</th>
+          <th>Customer address</th>
+          <th>Delivery date</th>
+          <th>Status</th>
+          <th>Select</th>
 
 
         </tr>
@@ -306,6 +306,7 @@ mark selected paid
     )
 
 :<tr><td>...</td>
+<td>...</td>
 <td>...</td>
 <td>...</td>
 <td>...</td>

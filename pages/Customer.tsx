@@ -20,6 +20,14 @@ export default function Customer() {
     const [allProducts,setAllProducts]:any=useState([])
     
     const [searchString,setSearchString]:any=useState("")
+    const [unAssignOrders,setUnAssignOrders]:any=useState(0)
+    const [lowStock,setLowStock]:any=useState(0)
+    
+    
+    const [pending,setPending]:any=useState(0)
+    const [awaitngDelivery,setAwaitingDelivery]:any=useState(0)
+    const [pickedUp,setPickedUp]:any=useState(0)
+    const [returned,setReturned]:any=useState(0)
 
     useEffect(() => {
       
@@ -60,9 +68,44 @@ if(state){
               dispatch(setVendorSettings({...snap.data(),id:snap.id}))
               }
       })
-dispatch(setLoading(false))
 
-      dispatch(setLoading(false))
+let un:any=0
+let open:any=0
+let pend:any=0
+let  picked:any=0
+let ret:any=0
+     
+            const data3 = await getDocs(collection(db, "orders"));
+            data3.forEach((snap)=>{
+                if(snap.data()){
+                  if(snap.data().customer.email===state.user.email){
+                  if(snap.data().status=="open"){
+                    open=parseInt(open)+1
+
+                  }
+                  if(snap.data().status=="pickedUp"){
+                    picked=parseInt(picked)+1
+                  }
+                  if(snap.data().status=="returned"){
+                    ret=parseInt(ret)+1
+                  }
+                  if(snap.data().status=="Delivery"){
+                    pend=parseInt(pend)+1
+                  }
+                  if(!snap.data().employee.email)
+                  {
+                      un= parseInt(un)+1
+                  }
+                }
+              }
+            })
+            setPending(open)
+            setAwaitingDelivery(pend)
+            setPickedUp(picked)
+            setReturned(ret)
+            setUnAssignOrders(un)
+      
+            dispatch(setLoading(false))
      
     };
 
@@ -97,7 +140,73 @@ dispatch(setLoading(false))
     <CustomerNavbar/>
     <div className="container mt-4 pt-4">
 
+    <div className="row">
+<div className="col-md-6 col-lg-4 " >
+
+<Link href={"CustomerOrders"}>
+<div className={`
+${style.card} card mb-4 text-center p-5  shadow-sm
+    `}>
+
+<p> {pending? pending :0}: Pending Orders</p>
+
+
+</div>
+</Link>
+
     
+</div>
+
+<div className="col-md-6 col-lg-4 " >
+
+<Link href={"CustomerOrders"}>
+<div className={`
+${style.card} card mb-4 text-center p-5  shadow-sm
+    `}>
+
+<p> {awaitngDelivery? awaitngDelivery :0}: Awaiting Delivery</p>
+
+
+</div>
+</Link>
+
+    
+</div>
+<div className="col-md-6 col-lg-4 " >
+
+<Link href={"CustomerOrders"}>
+<div className={`
+${style.card} card mb-4 text-center p-5  shadow-sm
+    `}>
+
+<p> {pickedUp? pickedUp :0}: Picked Up  Orders</p>
+
+
+</div>
+</Link>
+
+    
+</div>
+<div className="col-md-6 col-lg-4 " >
+
+<Link href={"CustomerOrders"}>
+<div className={`
+${style.card} card mb-4 text-center p-5  shadow-sm
+    `}>
+
+<p> {returned? returned :0}: Returned Orders</p>
+
+
+</div>
+</Link>
+
+    
+</div>
+
+
+
+
+</div>
     
         <div className='row mb-4'>
 

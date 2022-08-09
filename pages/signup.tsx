@@ -13,7 +13,17 @@ export default function Signup() {
   const state = useSelector((state: RootState) =>state.auth)
     
   const dispatch = useDispatch<AppDispatch>();
+  const [showPassword, setShowPassword]:any = useState(false);
+  const [showPassword2, setShowPassword2]:any = useState(false);
 
+  const handlePassword2 = () => {
+    setShowPassword2(!showPassword2);
+    
+    
+  }
+  const handlePassword = () => {
+    setShowPassword(!showPassword);
+  }
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const user:any = {
@@ -97,21 +107,23 @@ export default function Signup() {
                 />
                 <div className="input_container mt-4 position-relative">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     className="form-control"
                     name="password"
                     placeholder="Create Password*"
                     required
                   />
+                  
                   <img
                     src="password_icon.png"
                     className={`img-fluid ${style.icon}`}
                     alt=""
+                    onClick={handlePassword}
                   />
                 </div>{" "}
                 <div className="input_container mt-4 position-relative">
                   <input
-                    type="password"
+                    type={showPassword2 ? "text" : "password"}
                     className="form-control"
                     name="password_c"
                     placeholder="Confirm Password”"
@@ -121,6 +133,7 @@ export default function Signup() {
                     src="password_icon.png"
                     className={`img-fluid ${style.icon}`}
                     alt=""
+                    onClick={handlePassword2}
                   />
                 </div>
               </div>

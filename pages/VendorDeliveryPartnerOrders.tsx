@@ -14,6 +14,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../components/Loading';
 import { PaystackButton } from 'react-paystack'
 
+import style2 from '../styles/profile.module.css'
 
 import { FlutterWaveButton, useFlutterwave,closePaymentModal } from 'flutterwave-react-v3';
 
@@ -437,10 +438,10 @@ try {
 
 
 
-
-    <div className="container  mt-5 pt-5">
-     
-
+<div className={` ${style2.formContainer} container mt-5 `} >
+            <Link href="VendorDeliveryPartnerDashboard">
+            <button className={`btn ${style2.back_btn} btn-light `} style={{fontSize:'large'}}>
+            &#8592; Back </button></Link>
 
     <div className="row mt-4 mb-3   d-flex justify-content-end" >
            
@@ -456,7 +457,7 @@ try {
            :
            <Link href={""}><button onClick={payAll} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
            
-           pay all
+           Pay All
            </button></Link>}
            
              {vendorSettings && vendorSettings.paymentMethod=="paystack" ? 
@@ -468,13 +469,13 @@ try {
            
            
            
-                   {totalAmount>0?  <PaystackButton {...componentProps} className={`${style.login_btn}` }/>  :"select order"} 
+                   {totalAmount>0?  <PaystackButton {...componentProps} className={`${style.login_btn}` }/>  :"Select Order"} 
            </button></Link>
            
            :
            <Link href={""}><button onClick={paySelected} className={`btn  d-flex justify-content-center align-items-center  gap-2    ${style.login_btn}`}>
            
-           pay selected
+           Pay Selected
            </button></Link>}
                        
                    </div>
@@ -489,13 +490,13 @@ try {
       <thead  className={style.table_head}>
         <tr>
           
-          <th>product Name</th>
-          <th>price</th>
-          <th>customer name</th>
-          <th>delivery date</th>
-          <th>delivery price</th>
-          <th>status</th>
-          <th>select</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Customer Name</th>
+          <th>Delivery Date</th>
+          <th>Delivery Price</th>
+          <th>Status</th>
+          <th>Select</th>
 
 
         </tr>

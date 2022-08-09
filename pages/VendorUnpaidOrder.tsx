@@ -84,7 +84,7 @@ const filter=async()=>{
 
     <div className="container  mt-5 pt-5">
      
-<h4 className=' my-4' style={{fontFamily:"Poppins",margin:"1rem",color:'#1C7468'}}>choose Delivery person</h4>
+<h4 className=' my-4' style={{fontFamily:"Poppins",margin:"1rem",color:'#1C7468'}}>Choose Delivery person</h4>
 
      
         <div className='row mb-4'>
@@ -105,8 +105,8 @@ search
         <tr>
           
           <th>First Name</th>
-          <th>suname</th>
-          <th>email</th>
+          <th>Suname</th>
+          <th>Email</th>
           <th>Phone</th>
 
         </tr>

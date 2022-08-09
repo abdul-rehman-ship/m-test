@@ -204,12 +204,12 @@ Assign delivery partner
 
 <select name="status" value={searchString} onChange={onSearchChange} className="form-control mt-2" >
 
-<option value="all">all</option>
-<option value="open">open</option>
+<option value="all">All</option>
+<option value="open">Open</option>
 <option value="qualityCheck">Quality Check</option>
-<option value="packaging">packaging</option>
+<option value="packaging">Packaging</option>
 <option value="Delivery">Delivery</option>
-<option value="pickedUp">picked up</option>
+<option value="pickedUp">Picked up</option>
 <option value="Return">Return</option>
 <option value="closed">Closed</option>
 
@@ -223,12 +223,12 @@ Assign delivery partner
       <thead  className={style.table_head}>
         <tr>
           
-          <th>product Name</th>
-          <th>price</th>
-          <th>customer name</th>
-          <th>delivery date</th>
-          <th>status</th>
-          <th>assign to employee</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Customer Name</th>
+          <th>Delivery Date</th>
+          <th>Status</th>
+          <th>Assign To Employee</th>
 
 
         </tr>
@@ -249,11 +249,11 @@ Assign delivery partner
             <select name="status" value={customer.status} onChange={(e)=>handleStatus(e,customer.id)} className="form-control mt-2" >
 
 
-                    <option value="open">open</option>
+                    <option value="open">Open</option>
                     <option value="qualityCheck">Quality Check</option>
-                    <option value="packaging">packaging</option>
+                    <option value="packaging">Packaging</option>
                     <option value="Delivery">Delivery</option>
-                    <option value="pickedUp">picked up</option>
+                    <option value="pickedUp">Picked up</option>
                     <option value="Return">Return</option>
                     <option value="closed">Closed</option>
 

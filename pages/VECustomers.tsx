@@ -108,8 +108,8 @@ search
         <tr>
           
           <th>First Name</th>
-          <th>suname</th>
-          <th>email</th>
+          <th>Suname</th>
+          <th>Email</th>
           <th>Phone</th>
 
         </tr>
@@ -144,7 +144,7 @@ search
 
 :
 <div className="container mt-5">
-      <h3 style={{fontFamily:"Poppins"}}>you are not allowed to see customers </h3>
+      <h3 style={{fontFamily:"Poppins"}}>You are not allowed to see customers </h3>
     </div> 
 
 }

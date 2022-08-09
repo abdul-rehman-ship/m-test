@@ -6,11 +6,18 @@ import Loading from "../components/Loading";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { addUser, authRegister } from "../redux/slices/authSlice";
+import { addUser, authRegister, setLoading, setUser } from "../redux/slices/authSlice";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import {browserLocalPersistence, createUserWithEmailAndPassword,updateProfile,
+  signInWithEmailAndPassword,sendPasswordResetEmail,setPersistence, signOut} from 'firebase/auth'
+  import { addDoc, collection ,doc,getDocs,serverTimestamp} from "firebase/firestore"; 
+import { db } from "../Firebase";
+import { auth } from "../Firebase";
+
 
 import VendorNavbar from "../components/DeliveryPartnerNavbar";
+import { connected } from "process";
 
 export default function Signup() {
   const state = useSelector((state: RootState) => state.auth);
@@ -36,10 +43,59 @@ export default function Signup() {
       });
       toast.error(error);
     } else {
-      dispatch(authRegister(user));
+
+      try {
+        dispatch(setLoading(true))
+        const result=await createUserWithEmailAndPassword(auth,user.email,user.password)
+        if(result.user){
+         const res= uploadData(user)
+         if(res){
+          toast.success("account created successfully")
+          dispatch(setUser(state.user))
+
+         }
+   
+    router.push("/DeliveryPartner")
+         
+ 
+          
+        }
+        dispatch(setLoading(false))
+       
+  
+      } catch (error) {
+        dispatch(setLoading(false))
+        toast.error(error.message)
+      }
+
+
+
     }
   };
+const uploadData=async(user:any)=>{
+  
+  try {
 
+
+    await addDoc(collection(db, "users"), {
+      email:user? user.email:"",        
+      firstName:user? user.firstName:"",
+      surname:user? user.surname:"",
+      accountType:"DPEmployee",
+      createdAt: serverTimestamp()
+      
+    });
+    signOut(auth)
+
+    return true
+  } catch (error) {
+    toast.error(error.message)
+    return false
+  }
+           
+ 
+
+}
   useEffect(() => {
    
   }, []);

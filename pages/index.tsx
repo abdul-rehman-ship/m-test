@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import loginStyle from "../styles/login.module.css";
 import { toast, Toaster } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import Loading from "../components/Loading";
@@ -26,6 +26,7 @@ const Home: NextPage = () => {
   const state = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const [showPassword, setShowPassword]:any = useState(false);
   useEffect(() => {
     const unsubscribe = async () => {
       dispatch(setLoading(true));
@@ -71,7 +72,9 @@ const Home: NextPage = () => {
     };
     unsubscribe();
   }, []);
-
+const handlePassword = () => {
+  setShowPassword(!showPassword);
+}
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -79,13 +82,13 @@ const Home: NextPage = () => {
     const user = { email, password };
 
     try {
+      dispatch(setLoading(true));
       await setPersistence(auth, browserLocalPersistence);
 
-      //  const result=  await signInWithEmailAndPassword(auth,email,password)
+       const result =  await signInWithEmailAndPassword(auth,email,password)
 
       let route: any;
       let user2: any;
-      dispatch(setLoading(true));
       const querySnapshot = await getDocs(collection(db, "users"));
       querySnapshot.forEach((doc) => {
         if (doc.data().email === email) {
@@ -104,7 +107,7 @@ const Home: NextPage = () => {
 
       toast.success("Logged in successfully.");
 
-             (router.push( "/DeliveryPartner"));
+             router.push( "/DeliveryPartner")
           } else if (doc.data().accountType === "vendorEmployee") {
             dispatch(setUser(user2));
             dispatch(setLoading(false));
@@ -128,7 +131,7 @@ const Home: NextPage = () => {
       
     } catch (error) {
       dispatch(setLoading(false));
-      toast.error(error);
+      toast.error(error.message);
     }
     // const res=await dispatch(authLogin(user))
     // const {result,route,newUser}:any=res.payload
@@ -202,16 +205,18 @@ const Home: NextPage = () => {
                   className={`${loginStyle.input_container} mt-5 position-relative`}
                 >
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     className="form-control"
                     name="password"
                     required
+                    
                     placeholder="Password"
                   />
                   <img
                     src="password_icon.png"
                     className={`img-fluid  ${loginStyle.icon}`}
                     alt=""
+                    onClick={handlePassword}
                   />
                 </div>
                 <div className="row mt-3">

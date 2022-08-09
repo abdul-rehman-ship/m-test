@@ -70,11 +70,11 @@ export default function CustomerNavbar() {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"Customer"}>Products</Link></Nav.Link>
                  
-                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"Contact"}>Contact</Link></Nav.Link>
+                 
                   <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"CustomerOrders"}>Orders</Link></Nav.Link>
                   <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"CustomerCart"}>Cart</Link></Nav.Link>
 
-
+                  <Nav.Link className={`mx-3 ${style.menu} `}><Link href={"Contact"}>Contact Us</Link></Nav.Link>
 
 
                   <NavDropdown className={`mx-3 ${style.menu} `} style={{color:"#00000BC !important"}}

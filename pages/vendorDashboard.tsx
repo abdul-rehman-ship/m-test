@@ -249,7 +249,7 @@ let ret:any=0
 ${style.card} card mb-4 text-center p-5  shadow-sm
     `}>
 
-<p> {pending? pending :0}:Pending Orders</p>
+<p> {pending? pending :0}: Pending Orders</p>
 
 
 </div>
@@ -312,7 +312,7 @@ ${style.card} card mb-4 text-center p-5  shadow-sm
 ${style.card} card mb-4 text-center p-5  shadow-sm
     `}>
 
-<p> {unAssignOrders} : UnAssigned order</p>
+<p> {unAssignOrders}: UnAssigned order</p>
 
 
 </div>
@@ -327,7 +327,7 @@ ${style.card} card mb-4 text-center p-5  shadow-sm
 ${style.card} card mb-4 text-center p-5  shadow-sm
     `}>
 
-<p>{ lowStock} : Low Stock </p>
+<p>{ lowStock}: Low Stock </p>
 
 
 </div>

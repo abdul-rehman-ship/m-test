@@ -113,8 +113,8 @@ search
         <tr>
           
           <th>First Name</th>
-          <th>suname</th>
-          <th>email</th>
+          <th>Suname</th>
+          <th>Email</th>
           <th>Phone</th>
 
         </tr>

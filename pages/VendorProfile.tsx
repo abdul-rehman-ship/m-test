@@ -156,7 +156,7 @@ function Profile() {
 </div>
 <div className="col-md-6 mt-4">
     
-<span>buisness Address*</span>
+<span>Buisness Address*</span>
         <input type="text"  className="form-control mt-2"  name="buisnessAddress" onChange={handleChange}  value={mUser.buisnessAddress}  />
 
 </div>
@@ -167,7 +167,7 @@ function Profile() {
 <div className="row  mx-2">
 
 <div className="col-md-6 mt-4">
-        <span>Whats app Number*</span>
+        <span>Whatsapp Number*</span>
         <input type="text"   className="form-control mt-2" name="WNumber" onChange={handleChange}  value={mUser.WNumber}  />
 
 

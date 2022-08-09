@@ -48,10 +48,10 @@ export default function(req:any,res:any){
     
     transporter.sendMail(mailOptions, function(error:any, info:any){
       if (error) {
-        console.log(error.message);
+        return res.status(500).json({msg:error.message})
       } else {
-        console.log('Email sent: ' + info.response);
-      res.status(200).json({msg:"success"})
+        
+    return  res.status(200).json({msg:"email sended successfully"})
     
       }
     });

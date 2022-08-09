@@ -146,12 +146,12 @@ if(res<=0){
 
 <select name="status" value={searchString} onChange={onSearchHandle} className="form-control mt-2" >
 
-<option value="all">all</option>
-<option value="open">open</option>
+<option value="all">All</option>
+<option value="open">Open</option>
 <option value="qualityCheck">Quality Check</option>
-<option value="packaging">packaging</option>
+<option value="packaging">Packaging</option>
 <option value="Delivery">Delivery</option>
-<option value="pickedUp">picked up</option>
+<option value="pickedUp">Picked up</option>
 <option value="Return">Return</option>
 <option value="closed">Closed</option>
 
@@ -165,11 +165,11 @@ if(res<=0){
       <thead  className={style.table_head}>
         <tr>
           
-          <th>product Name</th>
-          <th>price</th>
-          <th>customer</th>
-          <th>delivery date</th>
-          <th>status</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Customer</th>
+          <th>Delivery date</th>
+          <th>Status</th>
 
         </tr>
       </thead>

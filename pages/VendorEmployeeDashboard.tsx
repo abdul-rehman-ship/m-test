@@ -5,6 +5,8 @@ import {useRouter} from 'next/router'
 import VendorNavbar from '../components/VendorNavbar'
 import style from '../styles/vendor.module.css'
 import Link from 'next/link'
+import style2 from '../styles/profile.module.css'
+
 
 function VendorCustomerDashboard() {
 
@@ -27,7 +29,10 @@ const router=useRouter()
     <VendorNavbar/>
 
 
-    <div className="container mt-5" >
+    <div className={` ${style2.formContainer} container mt-5 `} >
+            <Link href="VendorEmployees">
+            <button className={`btn ${style2.back_btn} btn-light `} style={{fontSize:'large'}}>
+            &#8592; Back </button></Link>
         <div className="row mt-4">
 
             <div className="col-md-6 col-lg-4 " >

@@ -37,7 +37,7 @@ const [assign,setAssign]:any=useState("none")
     let arr: any = [];
     const data = await getDocs(collection(db, "orders"));
     data.forEach((doc: any) => {
-      if(doc.data().deliveryPartner.email==state.user.email){
+      if(doc.data().deliveryPartner.email== state.user?state.user.email:""){
         arr.push({...doc.data(),id:doc.id})
       }
       
@@ -55,17 +55,22 @@ const [assign,setAssign]:any=useState("none")
   
 const getAllCustomers=async()=>{
   let arr: any = [];
+  let user:any=[]
   const data = await getDocs(collection(db, "users"));
   data.forEach(async(doc: any) => {
     if(doc.data().accountType==="DPEmployee"){
       arr.push({...doc.data(),id:doc.id})
 
     }
+    
     await setallEmployees(arr)
     
   });
 }
     useEffect(()=>{
+      if(!state.user.email){
+        router.push("/")
+      }
        getData()
        getAllCustomers()
     },[])
@@ -92,9 +97,9 @@ const getAllCustomers=async()=>{
     }
 
     const handleClick=(id:any,cid:any)=>{
-        dispatch(setOrderId(id))
-        dispatch(setCustomerId(cid))
-        router.push('trackOrder',{query:{id:id,customerId:cid}})
+        // dispatch(setOrderId(id))
+        // dispatch(setCustomerId(cid))
+        // router.push('trackOrder',{query:{id:id,customerId:cid}})
         
         
   }
@@ -180,7 +185,7 @@ try {
 
 
 
-
+{customers ?
 
     <div className="container  mt-5 pt-5">
      
@@ -191,12 +196,12 @@ try {
 
 <select name="status" value={searchString} onChange={onSearchChange} className="form-control mt-2" >
 
-<option value="all">all</option>
-<option value="open">open</option>
+<option value="all">All</option>
+<option value="open">Open</option>
 <option value="qualityCheck">Quality Check</option>
-<option value="packaging">packaging</option>
+<option value="packaging">Packaging</option>
 <option value="Delivery">Delivery</option>
-<option value="pickedUp">picked up</option>
+<option value="pickedUp">Picked up</option>
 <option value="Return">Return</option>
 <option value="closed">Closed</option>
 
@@ -210,13 +215,13 @@ try {
       <thead  className={style.table_head}>
         <tr>
           
-          <th>product Name</th>
-          <th>customer name</th>
-          <th>customer phone</th>
-          <th>customer address</th>
-          <th>delivery date</th>
-          <th>status</th>
-          <th>assign</th>
+          <th>Product Name</th>
+          <th>Customer name</th>
+          <th>Customer phone</th>
+          <th>Customer address</th>
+          <th>Delivery date</th>
+          <th>Status</th>
+          <th>Assign</th>
           
 
 
@@ -240,8 +245,8 @@ try {
 <select name="status"  value={customer.status} onChange={(e)=>handleStatus(e,customer.id)} className="form-control mt-2" >
 
 
-<option value="open">open</option>
-<option value="pickedUp">picked up</option>
+<option value="open">Open</option>
+<option value="pickedUp">Picked up</option>
 <option value="closed">Closed</option>
 
 
@@ -249,9 +254,9 @@ try {
 <select name="status"  value={customer.status} onChange={(e)=>handleStatus(e,customer.id)} disabled className="form-control mt-2" >
 
 
-        <option value="open">open</option>
+        <option value="open">Open</option>
        
-        <option value="pickedUp">picked up</option>
+        <option value="pickedUp">Picked up</option>
         
         <option value="closed">Closed</option>
 
@@ -297,6 +302,7 @@ try {
 <td>...</td>
 <td>...</td>
 <td>...</td>
+<td>...</td><td>...</td>
 
 </tr>}
        
@@ -304,6 +310,7 @@ try {
     </Table>
             
         </div>
+        :"Loading.."}
     </>
 
 

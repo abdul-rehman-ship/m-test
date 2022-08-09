@@ -17,6 +17,7 @@ function Contact() {
     const vendorProfile:any=useSelector((state:any)=>state.auth.vendorProfile)
     const dispatch=useDispatch<AppDispatch>()
     const [text,setText]:any=useState("")
+    const [profile,setProfile]:any=useState({})
     const handleChange=async(e:any)=>{
       setText(e.target.value)
     }
@@ -29,16 +30,21 @@ function Contact() {
           dispatch(setLoading(true))
 
           const response = await axios.post('/api/sendMailToVendor',{
-            email:vendorProfile?vendorProfile.email:"",
+            email:profile?profile.email:"",
             customerName:user?user.firstName+" "+user.surname:"",
             text,
             customerEmail:user? user.email:""
          
         
           })
+          if(response){
+            dispatch(setLoading(false))
+               toast(response.data.msg)
+          }
+        
           
           dispatch(setLoading(false))
-          toast.success("email sended")
+          
         } catch (error) {
           dispatch(setLoading(false))
           toast.error(error.message)
@@ -52,6 +58,7 @@ function Contact() {
       data.forEach((snap)=>{
         if(snap.data()){
           setVendorProfile(snap.data())
+          setProfile(snap.data())
         }
       })
     }
@@ -69,7 +76,7 @@ getData()
 
     
 
-        <textarea name="description" id="" onChange={handleChange} placeholder='write something here...' />
+        <textarea name="description" id="" onChange={handleChange} placeholder='Kindly type your message here to send us an email...' />
     
 </div>
 <div className="row">
