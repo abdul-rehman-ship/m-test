@@ -13,7 +13,7 @@ import {browserLocalPersistence, createUserWithEmailAndPassword,updateProfile,
   signInWithEmailAndPassword,sendPasswordResetEmail,setPersistence, signOut} from 'firebase/auth'
   import { addDoc, collection ,doc,getDocs,serverTimestamp} from "firebase/firestore"; 
 import { db } from "../Firebase";
-import { auth } from "../Firebase";
+import { auth2 } from "../Firebase";
 
 
 import VendorNavbar from "../components/DeliveryPartnerNavbar";
@@ -46,20 +46,22 @@ export default function Signup() {
 
       try {
         dispatch(setLoading(true))
-        const result=await createUserWithEmailAndPassword(auth,user.email,user.password)
-        if(result.user){
-         const res= uploadData(user)
-         if(res){
+        const result=await createUserWithEmailAndPassword(auth2,user.email,user.password)
+        .then(()=>{
+          const res= uploadData(user)
           toast.success("account created successfully")
-          dispatch(setUser(state.user))
+          signOut(auth2)
 
-         }
+
+        })
+        
+      
    
-    router.push("/DeliveryPartner")
+    
          
  
           
-        }
+        
         dispatch(setLoading(false))
        
   
@@ -85,7 +87,7 @@ const uploadData=async(user:any)=>{
       createdAt: serverTimestamp()
       
     });
-    signOut(auth)
+
 
     return true
   } catch (error) {
