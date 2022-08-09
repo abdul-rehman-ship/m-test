@@ -83,16 +83,7 @@ try {
             orders:[]
             
           });
-    }else if(user.accountType=="DPEmployee"){
-      docRef= await addDoc(collection(db, "users"), {
-        email: user.email,        
-        firstName: user.firstName,
-        surname: user.surname,
-        accountType:user.accountType,
-        createdAt: serverTimestamp()
-        
-      });
-
+    
     }
  toast.success("user created successfully")
  

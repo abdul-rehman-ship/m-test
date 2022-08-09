@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import loginStyle from "../styles/login.module.css";
 import { toast, Toaster } from "react-hot-toast";
-import { useEffect ,useState} from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import Loading from "../components/Loading";
@@ -26,7 +26,6 @@ const Home: NextPage = () => {
   const state = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const [showPassword, setShowPassword]:any = useState(false);
   useEffect(() => {
     const unsubscribe = async () => {
       dispatch(setLoading(true));
@@ -53,6 +52,11 @@ const Home: NextPage = () => {
 
                   route = "/VendorEmployee";
                 }
+                else if (doc.data().accountType === "DPEmployee") {
+                  dispatch(setUser(doc.data()));
+
+                  route = "/DPEmployeeDashboard";
+                }
                 dispatch(setID(doc.id));
                 router.push(route);
 
@@ -72,9 +76,7 @@ const Home: NextPage = () => {
     };
     unsubscribe();
   }, []);
-const handlePassword = () => {
-  setShowPassword(!showPassword);
-}
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -82,56 +84,60 @@ const handlePassword = () => {
     const user = { email, password };
 
     try {
-      dispatch(setLoading(true));
       await setPersistence(auth, browserLocalPersistence);
 
-       const result =  await signInWithEmailAndPassword(auth,email,password)
+       const result=  await signInWithEmailAndPassword(auth,email,password).then(()=>{
 
-      let route: any;
-      let user2: any;
-      const querySnapshot = await getDocs(collection(db, "users"));
-      querySnapshot.forEach((doc) => {
-        if (doc.data().email === email) {
-          user2 = doc.data();
+       }).catch((error)=>{
+        toast.error(error.message)
+    })
 
-          if (doc.data().accountType === "customer") {
-            dispatch(setUser(user2));
-            dispatch(setLoading(false));
+      // let route: any;
+      // let user2: any;
+      // dispatch(setLoading(true));
+      // const querySnapshot = await getDocs(collection(db, "users"));
+      // querySnapshot.forEach((doc) => {
+      //   if (doc.data().email === email) {
+      //     user2 = doc.data();
 
-      toast.success("Logged in successfully.");
+      //     if (doc.data().accountType === "customer") {
+      //       dispatch(setUser(user2));
+      //       dispatch(setLoading(false));
 
-             router.push("/Customer")
-          } else if (doc.data().accountType === "deliveryPartner") {
-            dispatch(setUser(user2));
-            dispatch(setLoading(false));
+      // toast.success("Logged in successfully.");
 
-      toast.success("Logged in successfully.");
+      //        router.push("/Customer")
+      //     } else if (doc.data().accountType === "deliveryPartner") {
+      //       dispatch(setUser(user2));
+      //       dispatch(setLoading(false));
 
-             router.push( "/DeliveryPartner")
-          } else if (doc.data().accountType === "vendorEmployee") {
-            dispatch(setUser(user2));
-            dispatch(setLoading(false));
+      // toast.success("Logged in successfully.");
 
-            toast.success("Logged in successfully.");
-             router.push( "/VendorEmployee")
-          } else if (doc.data().accountType === "DPEmployee") {
-            dispatch(setUser(user2));
-            dispatch(setLoading(false));
+      //        (router.push( "/DeliveryPartner"));
+      //     } else if (doc.data().accountType === "vendorEmployee") {
+      //       dispatch(setUser(user2));
+      //       dispatch(setLoading(false));
 
-      toast.success("Logged in successfully.");
+      //       toast.success("Logged in successfully.");
+      //        router.push( "/VendorEmployee")
+      //     } else if (doc.data().accountType === "DPEmployee") {
+      //       dispatch(setUser(user2));
+      //       dispatch(setLoading(false));
 
-             router.push("/DPEmployeeDashboard");
-          } else {
-            dispatch(setLoading(false));
+      // toast.success("Logged in successfully.");
 
-            return;
-          }
-        }
-      });
+      //        router.push("/DPEmployeeDashboard");
+      //     } else {
+      //       dispatch(setLoading(false));
+
+      //       return;
+      //     }
+      //   }
+      // });
       
     } catch (error) {
       dispatch(setLoading(false));
-      toast.error(error.message);
+      toast.error(error);
     }
     // const res=await dispatch(authLogin(user))
     // const {result,route,newUser}:any=res.payload
@@ -205,18 +211,16 @@ const handlePassword = () => {
                   className={`${loginStyle.input_container} mt-5 position-relative`}
                 >
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type="password"
                     className="form-control"
                     name="password"
                     required
-                    
                     placeholder="Password"
                   />
                   <img
                     src="password_icon.png"
                     className={`img-fluid  ${loginStyle.icon}`}
                     alt=""
-                    onClick={handlePassword}
                   />
                 </div>
                 <div className="row mt-3">
