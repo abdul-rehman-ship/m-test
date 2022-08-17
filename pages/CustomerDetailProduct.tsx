@@ -443,8 +443,8 @@ const handleCustomFieldsClick=async(key:any,value:any)=>{
             
             <div key={key} className="d-flex gap-2">
               <h3 style={{fontWeight:'600',fontSize:'1.5rem',marginTop:"0.3rem"}}>{key} :</h3>
-              {value && value.map((i:any)=>{
-                return <span className={`btn  mt-0  m-2 ${style.mBtn}`} onClick={()=>handleCustomFieldsClick(key,i)} style={{background:"#d3d3d3" ,padding:"0.2rem 0.5rem",borderRadius:"5px",textAlign:"center"}}>{i}</span>
+              {value && value.map((i:any,index:any)=>{
+                return <span key={index} className={`btn  mt-0  m-2 ${style.mBtn}`} onClick={()=>handleCustomFieldsClick(key,i)} style={{background:"#d3d3d3" ,padding:"0.2rem 0.5rem",borderRadius:"5px",textAlign:"center"}}>{i}</span>
               })}
               
               </div>
