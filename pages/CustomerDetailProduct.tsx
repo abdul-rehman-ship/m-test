@@ -460,7 +460,7 @@ const handleCustomFieldsClick=async(key:any,value:any)=>{
             <div key={key} className="d-flex gap-2">
               <h3 style={{fontWeight:'600',fontSize:'1.5rem',marginTop:"0.3rem"}}>Selected {key} :</h3>
               
-                 <span className={`btn  mt-0  m-2 ${style.mBtn}`}  style={{background:"#d3d3d3" ,padding:"0.2rem 0.5rem",borderRadius:"5px",textAlign:"center"}}>{value}</span>
+                 <span className={`btn  mt-0  m-2 ${style.mBtn}`}  style={{background:"#d3d3d3" ,padding:"0.2rem 0.5rem",borderRadius:"5px",textAlign:"center"}}>{String(value) ? String(value):""}</span>
               
               
               </div>
