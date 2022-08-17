@@ -41,6 +41,11 @@ function VendorAddNewProduct() {
   const state = useSelector((state: any) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const [attributes,setAttributes]:any=useState([])
+  const [attirbuteField,setAttirbuteField]:any=useState(false)
+  const [attributesItem,setAttributesItem]:any=useState({})
+  const [showAttributesItem,setShowAttributesItem]:any=useState(false)
+
   useEffect(() => {
     if(!state.vendor){
         router.push("/")
@@ -76,6 +81,8 @@ function VendorAddNewProduct() {
   };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    
+    
     try {
       dispatch(setLoading(true));
 
@@ -90,6 +97,7 @@ function VendorAddNewProduct() {
         salePrice: productItem.salePrice,
         images: [...urls],
         createdAt: serverTimestamp(),
+        customerFields:attributesItem? attributesItem :{}
       });
       dispatch(setLoading(false));
       toast.success("product uploaded successfully");
@@ -125,6 +133,43 @@ function VendorAddNewProduct() {
     const files = target.files;
     checkImages(files);
   };
+  const showAttributeField=async()=>{
+    setAttirbuteField(!attirbuteField)
+  }
+  const handleAddAttributes=async(e:any)=>{
+    e.preventDefault()
+    const value=e.target.attribute.value.toLowerCase()
+    if(!attributes.includes(value)){
+      setAttributes([...attributes,value])
+      setAttributesItem({...attributesItem,[value]:[]})
+    }
+    
+    
+    
+    
+    
+    
+
+  }
+  const AddNewAttributeItem=async()=>{
+    
+    
+    setShowAttributesItem(!showAttributesItem)
+    
+    
+
+
+
+   
+  }
+  const handleAddNewAttributeItem=async(e:any,item:any)=>{
+    e.preventDefault()
+    const value=e.target.item.value.toLowerCase()
+
+    setAttributesItem({...attributesItem,[item]:[...attributesItem[item],value]})
+    setShowAttributesItem(!showAttributesItem)
+    
+  }
   return (
     <>
       <VendorNavbar />
@@ -228,6 +273,7 @@ function VendorAddNewProduct() {
             </div>
           </div>
 
+ 
           <div className="row mt-4 mx-2">
             <div className="col-md-6">
               <button type="submit" className="btn">
@@ -237,6 +283,64 @@ function VendorAddNewProduct() {
             <div className="col-md-6"></div>
           </div>
         </form>
+
+
+<div className="row mt-4">
+        {attributes.length>0 && 
+          attributes.map((item:any)=>{
+            return <>
+              <div className="col-md-6 mt-4">
+                
+                <h3 className="m-3" style={{fontFamily:"Poppins",color:"#1C7468"}}>{item}</h3>
+                
+              {
+                attributesItem[item].length>0 && attributesItem[item].map((i:any,index:any)=>{
+                  return <span className="m-3"key={index} style={{background:"#d3d3d3",padding:"0.3rem 1rem",borderRadius:"5px"}}>{i}</span>
+                })
+              }
+              <br />
+                <span className="btn btn-light mt-2" onClick={()=>AddNewAttributeItem()}>Add New {item}</span>
+                {showAttributesItem &&
+                
+                <form onSubmit={(e)=>handleAddNewAttributeItem(e,item)} >
+                    <span>New {item}</span>
+                    <input type="text" name="item" className="form-control mt-2"/>
+                </form>
+          }
+                </div>
+            
+            
+            
+            </>
+          })
+        
+        
+        }
+
+
+</div>
+        <div className="row">
+  <div className="col-md-6">
+  <button type="button" onClick={showAttributeField} className="btn mt-2 mx-3">
+                Add Custom Fields
+              </button>
+  </div>
+
+  
+</div>
+       <div className="row mt-4 mb-5">
+
+        {attirbuteField && 
+        <div className="col-md-6">
+          <form onSubmit={handleAddAttributes}>
+        <span>Custom Field Name</span>
+        <input type="text" name="attribute" className="form-control mt-2" />
+        </form>
+        </div>
+}
+        
+       </div>
+
       </div>
     </>
   );

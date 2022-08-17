@@ -28,6 +28,7 @@ function CustomerDetailProduct() {
  const userID:any=useSelector((state:any)=>state.auth.id)
  const user:any=useSelector((state:any)=>state.auth.user)
  const dispatch=useDispatch<AppDispatch>()
+const [productVariation,setProductVariation]:any=useState({})
 
  const loading=useSelector((state:any)=>state.auth.loading)
 
@@ -39,6 +40,13 @@ const getData=async()=>{
       dispatch(setID(snap.id))
     }
   })
+  const keys=Object.keys(product.customerFields)
+  const myObj={}
+  keys.forEach((key)=>{
+    myObj[key]=""
+  }
+  )
+  setProductVariation(myObj)
 }
 useEffect(()=>{
   if(!user.email){
@@ -378,6 +386,12 @@ const checkStock=()=>{
   }
 }
 
+const handleCustomFieldsClick=async(key:any,value:any)=>{
+  setProductVariation({...productVariation,[key]:value})
+  console.log(productVariation);
+  
+
+}
 
   return (
     <>
@@ -421,6 +435,36 @@ const checkStock=()=>{
         <div className="mt-4 d-flex justify-content-between">
           <h3 style={{fontWeight:'600',fontSize:'1.5rem'}}>Stock :</h3>
           <p>{product.initialStock}</p>
+        </div>
+        <div className="mt-4 d-flex flex-column">
+         {product.customerFields && Object.entries(product.customerFields).map(([key,value])=>{
+
+            return <>
+            
+            <div key={key} className="d-flex gap-2">
+              <h3 style={{fontWeight:'600',fontSize:'1.5rem',marginTop:"0.3rem"}}>{key} :</h3>
+              {value && value.map((i:any)=>{
+                return <span className={`btn  mt-0  m-2 ${style.mBtn}`} onClick={()=>handleCustomFieldsClick(key,i)} style={{background:"#d3d3d3" ,padding:"0.2rem 0.5rem",borderRadius:"5px",textAlign:"center"}}>{i}</span>
+              })}
+              
+              </div>
+              </>
+         })}
+        </div>
+        <div className="mt-4 d-flex flex-column">
+         {productVariation && Object.entries(productVariation).map(([key,value])=>{
+
+            return <>
+            
+            <div key={key} className="d-flex gap-2">
+              <h3 style={{fontWeight:'600',fontSize:'1.5rem',marginTop:"0.3rem"}}>Selected {key} :</h3>
+              
+                 <span className={`btn  mt-0  m-2 ${style.mBtn}`}  style={{background:"#d3d3d3" ,padding:"0.2rem 0.5rem",borderRadius:"5px",textAlign:"center"}}>{value}</span>
+              
+              
+              </div>
+              </>
+         })}
         </div>
         <div className="mt-4">
           <h3>Description: </h3>

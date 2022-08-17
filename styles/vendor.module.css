@@ -120,3 +120,17 @@ color: white
     !important;
     margin-top: 1rem;
 }
+.mBtn:focus{
+    background-color: red !important;
+
+    border: 1px solid red;
+}
+.mBtn:active{
+    background-color: red !important;
+
+    border: 1px solid red;
+}
+.mBtn:any-link{
+    background-color: red !important;
+
+}
